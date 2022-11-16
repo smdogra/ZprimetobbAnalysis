@@ -1,0 +1,10 @@
+[I 13:05:47.544 NotebookApp] Serving notebooks from local directory: /cms/scratch/sdogra/BFF/Zprime2bAnalysis/decaf
+[I 13:05:47.544 NotebookApp] The Jupyter Notebook is running at:
+[I 13:05:47.544 NotebookApp] http://127.0.0.1:9097/?token=408a9322c4dfda8afac1e42945e41098befd8a1d7381e5e0
+[I 13:05:47.544 NotebookApp] Use Control-C to stop this server and shut down all kernels (twice to skip confirmation).
+[C 13:05:47.553 NotebookApp] 
+    
+    To access the notebook, open this file in a browser:
+        file:///run/user/556950852/jupyter/nbserver-3128044-open.html
+    Or copy and paste one of these URLs:
+        http://127.0.0.1:9097/?token=408a9322c4dfda8afac1e42945e41098befd8a1d7381e5e0

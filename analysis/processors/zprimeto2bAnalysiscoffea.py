@@ -35,7 +35,7 @@ np.errstate(invalid='ignore', divide='ignore')
 
 class AnalysisProcessor(processor.ProcessorABC):
 
-    lumis = {  # Values from https://twiki.cern.ch/twiki/bin/viewauth/CMS/PdmVAnalysisSummaryTable
+    lumis = {  # Values from https://twiki.cern.ch/twiki/bin/viewauth/CMS/TWikiLUM
         '2016': 19.52, #preVFP
         #'2016': 16.81, #postVFP
         '2017': 41.48,
@@ -74,79 +74,9 @@ class AnalysisProcessor(processor.ProcessorABC):
                  'ecalBadCalibFilter'
                  ],
 
-
     }
 
     def __init__(self, year, xsec, corrections, ids, common):
-
-        self._fields = """
-        CaloMET_pt
-        CaloMET_phi
-        Electron_charge
-        Electron_cutBased
-        Electron_dxy
-        Electron_dz
-        Electron_eta
-        Electron_mass
-        Electron_phi
-        Electron_pt
-        Flag_BadPFMuonFilter
-        Flag_EcalDeadCellTriggerPrimitiveFilter
-        Flag_HBHENoiseFilter
-        Flag_HBHENoiseIsoFilter
-        Flag_globalSuperTightHalo2016Filter
-        Flag_goodVertices
-        GenPart_eta
-        GenPart_genPartIdxMother
-        GenPart_pdgIdGenPart_phi
-        GenPart_pt
-        GenPart_statusFlags
-        HLT_Ele115_CaloIdVT_GsfTrkIdT
-        HLT_Ele32_WPTight_Gsf
-        HLT_PFMETNoMu120_PFMHTNoMu120_IDTight
-        HLT_PFMETNoMu120_PFMHTNoMu120_IDTight_PFHT60
-        HLT_Photon200
-        Jet_btagDeepB
-        Jet_btagDeepFlavB
-        Jet_chEmEF
-        Jet_chHEF
-        Jet_eta
-        Jet_hadronFlavour
-        Jet_jetId
-        Jet_mass
-        Jet_neEmEF
-        Jet_neHEF
-        Jet_phi
-        Jet_pt
-        Jet_rawFactor
-        MET_phi
-        MET_pt
-        Muon_charge
-        Muon_eta
-        Muon_looseId
-        Muon_mass
-        Muon_pfRelIso04_all
-        Muon_phi
-        Muon_pt
-        Muon_tightId
-        PV_npvs
-        Photon_eta
-        Photon_phi
-        Photon_pt
-        Tau_eta
-        Tau_idDecayMode
-        Tau_idMVAoldDM2017v2
-        Tau_phi
-        Tau_pt
-        fixedGridRhoFastjetAll
-        genWeight
-        nElectron
-        nGenPart
-        nJet
-        nMuon
-        nPhoton
-        nTau
-        """.split()
 
         self._year = year
 
@@ -155,134 +85,135 @@ class AnalysisProcessor(processor.ProcessorABC):
         self._xsec = xsec
         
         self._samples = {
-            'sr':('TTJets','QCD'),
-        }
-
-        self._gentype_map = {
-            'xbb':      1,
-            'tbcq':     2,
-            'tbqq':     3,
-            'zcc':      4,
-            'wcq':      5,
-            'vqq':      6,
-            'bb':       7,
-            'bc':       8,
-            'b':        9,
-            'cc':      10,
-            'c':       11,
-            'other':   12
-            # 'garbage': 13
-        }
-
-        self._ZHbbvsQCDwp = {
-            '2016': 0.53,
-            '2017': 0.61,
-            '2018': 0.65
+            'sr':('TT','QCD', 'Zprime'),
         }
 
         self._jet_triggers = {
             '2016': [
-            'HLT_DoublePFJets40_CaloBTagCSV'
+                'DoublePFJets40_CaloBTagCSV'
             ],
             '2017':[
-                'HLT_DoublePFJets40_CaloBTagCSV',
-                'HLT_PFHT180'
+                'DoublePFJets40_CaloBTagCSV',
+                'PFHT180'
                 
             ],
             '2018':[
-                'HLT_DoublePFJets40_CaloBTagCSV',
-                'HLT_PFHT180'
+                'DoublePFJets40_CaloBTagCSV',
+                'PFHT180'
             ]
         }
-
+        self._jet_triggers_sr = {
+            '2016': [
+                'DoublePFJets40_CaloBTagCSV'
+            ],
+            '2017':[
+                'DoublePFJets40_CaloBTagCSV',
+                'PFHT180'
+                
+            ],
+            '2018':[
+                'DoublePFJets40_CaloBTagCSV',
+                'PFHT180'
+            ]
+        }
         self._jec = {
             
-            '2016': [ 
-                {
-                    'no_apv':
-                    ['Summer19UL16_V7_MC_L1FastJet_AK4PFchs',
-                     'Summer19UL16_V7_MC_L2L3Residual_AK4PFchs',
-                     'Summer19UL16_V7_MC_L2Relative_AK4PFchs',
-                     'Summer19UL16_V7_MC_L2Residual_AK4PFchs',
-                     'Summer19UL16_V7_MC_L3Absolute_AK4PFchs'],
-                    
-                    'apv':
-                    ['Summer19UL16APV_V7_MC_L1FastJet_AK4PFchs',
-                     'Summer19UL16APV_V7_MC_L2L3Residual_AK4PFchs',
-                     'Summer19UL16APV_V7_MC_L2Relative_AK4PFchs',
-                     'Summer19UL16APV_V7_MC_L2Residual_AK4PFchs',
-                     'Summer19UL16APV_V7_MC_L3Absolute_AK4PFchs']
-                }
-            ],
-
+            '2016':  
+            {
+                'no_apv':
+                ['Summer19UL16_V7_MC_L1FastJet_AK4PFchs',
+                 'Summer19UL16_V7_MC_L2L3Residual_AK4PFchs',
+                 'Summer19UL16_V7_MC_L2Relative_AK4PFchs',
+                 'Summer19UL16_V7_MC_L2Residual_AK4PFchs',
+                 'Summer19UL16_V7_MC_L3Absolute_AK4PFchs',
+                 
+             ],
+                
+                'apv':
+                ['Summer19UL16APV_V7_MC_L1FastJet_AK4PFchs',
+                 'Summer19UL16APV_V7_MC_L2L3Residual_AK4PFchs',
+                 'Summer19UL16APV_V7_MC_L2Relative_AK4PFchs',
+                 'Summer19UL16APV_V7_MC_L2Residual_AK4PFchs',
+                 'Summer19UL16APV_V7_MC_L3Absolute_AK4PFchs',
+                 
+             ]
+            },
+            
+            
             '2017': [
                 'Summer19UL17_V5_MC_L1FastJet_AK4PFchs',
                 'Summer19UL17_V5_MC_L2L3Residual_AK4PFchs',
                 'Summer19UL17_V5_MC_L2Relative_AK4PFchs',
                 'Summer19UL17_V5_MC_L2Residual_AK4PFchs',
-                'Summer19UL17_V5_MC_L3Absolute_AK4PFchs'
-                
-            ],
-
-            '2018': [
-                 'Summer19UL18_V5_MC_L1FastJet_AK4PFchs',
-                 'Summer19UL18_V5_MC_L2L3Residual_AK4PFchs',
-                 'Summer19UL18_V5_MC_L3Absolute_AK4PFchs',
-                 'Summer19UL18_V5_MC_L2Relative_AK4PFchs',
-                 'Summer19UL18_V5_MC_L2Residual_AK4PFchs',
-                'Summer19UL18_V5_MC_L3Absolute_AK4PFchs'
-            ]
-        }
-# not updated JUNC
-        self._junc = {
-
-            '2016':[ 
-             {
-                 'apv': 'Summer19UL16_V7_MC_Uncertainty_AK4PFchs',
-                 'no_apv': 'Summer19UL16APV_V7_MC_Uncertainty_AK4PFchs'},
+                'Summer19UL17_V5_MC_L3Absolute_AK4PFchs',
             ],
             
-
-            '2017': [
-                'Summer19UL17_V5_MC_Uncertainty_AK4PFchs'
-            ],
-
             '2018': [
-                'Summer19UL18_V5_MC_Uncertainty_AK4PFchs'
+                'Summer19UL18_V5_MC_L1FastJet_AK4PFchs',
+                'Summer19UL18_V5_MC_L2Relative_AK4PFchs',
+                'Summer19UL18_V5_MC_L2L3Residual_AK4PFchs',
+                'Summer19UL18_V5_MC_L3Absolute_AK4PFchs',
             ]
         }
-
+        # not updated JUNC
+        self._junc = {
+            
+            '2016': 
+            {
+                'no_apv': ['Summer19UL16_V7_MC_Uncertainty_AK4PFchs',
+                       ],
+                'apv': ['Summer19UL16APV_V7_MC_Uncertainty_AK4PFchs',
+                    ]},
+            
+            
+            
+            '2017': [
+                'Summer19UL17_V5_MC_Uncertainty_AK4PFchs',
+            ],
+            
+            '2018': [
+                'Summer19UL18_V5_MC_Uncertainty_AK4PFchs',
+            ],
+        }
+        
         self._jr = {
-            '2016':[ 
-                {'apv': 'Summer20UL16APV_JRV3_MC_PtResolution_AK4PFchs',
-                 'no_apv': 'Summer19UL18_JRV2_DATA_PtResolution_AK4PFchs'}
-            ],
-
+            
+            '2016': 
+            {'apv': ['Summer20UL16APV_JRV3_MC_PtResolution_AK4PFchs',
+                 ],
+             'no_apv': ['Summer20UL16_JRV3_MC_PtResolution_AK4PFchs',
+                    ]},
+            
+            
             '2017': [
-                 'Summer19UL17_JRV2_MC_PtResolution_AK4PFchs'
+                'Summer19UL17_JRV2_MC_PtResolution_AK4PFchs',
             ],
-
+            
             '2018': [
-                'Summer19UL18_JRV2_MC_PtResolution_AK4PFchs'
-             ]
-        }
-
-        self._jersf = {
-
-            '2016': [
-             {'no_apv':'Summer20UL16_JRV3_MC_SF_AK8PFchs',
-                      'apv':'Summer20UL16APV_JRV3_MC_SF_AK4PFchs'},
-            ],
-
-            '2017': [
-                 'Summer19UL17_JRV2_MC_SF_AK4PFchs'
-            ],
-
-            '2018': [
-                 'Summer19UL18_JRV2_MC_SF_AK4PFchs'
+                'Summer19UL18_JRV2_MC_PtResolution_AK4PFchs',
             ]
         }
-
+        
+        self._jersf = {
+            
+            '2016': 
+            {'no_apv':['Summer20UL16_JRV3_MC_SF_AK4PFchs',
+                   ],
+             'apv':['Summer20UL16APV_JRV3_MC_SF_AK4PFchs',
+                ]},
+            
+            
+            
+            '2017': [
+                'Summer19UL17_JRV2_MC_SF_AK4PFchs',
+            ],
+            
+            '2018': [
+                'Summer19UL18_JRV2_MC_SF_AK4PFchs',
+            ]
+        }
+        
+        
         self._golden_json_path = {
             '2016': 'data/GoldenJason/Cert_271036-284044_13TeV_Legacy2016_Collisions16_JSON.txt',
             '2017': 'data/GoldenJason/Cert_294927-306462_13TeV_UL2017_Collisions17_GoldenJSON.txt',
@@ -315,19 +246,19 @@ class AnalysisProcessor(processor.ProcessorABC):
                 'Events',
                 hist.Cat('dataset', 'Dataset'),
                 hist.Cat('region', 'Region'),
-                hist.Bin('j1pt','AK4 Leading Jet Pt',[30.0, 60.0, 90.0, 120.0, 150.0, 180.0, 210.0, 250.0, 280.0, 310.0, 340.0, 370.0, 400.0, 430.0, 470.0, 510.0, 550.0, 590.0, 640.0, 690.0, 740.0, 790.0, 840.0, 900.0, 960.0, 1020.0, 1090.0, 1160.0, 1250.0])
+                hist.Bin('j1pt','AK4 Jet Pt',[30.0, 60.0, 90.0, 120.0, 150.0, 180.0, 210.0, 250.0, 280.0, 310.0, 340.0, 370.0, 400.0, 430.0, 470.0, 510.0, 550.0, 590.0, 640.0, 690.0, 740.0, 790.0, 840.0, 900.0, 960.0, 1020.0, 1090.0, 1160.0, 1250.0])
             ),
             'j1eta': hist.Hist(
                 'Events',
                 hist.Cat('dataset', 'Dataset'),
                 hist.Cat('region', 'Region'),
-                hist.Bin('j1eta','AK4 Leading Jet Eta',35,-3.5,3.5)),
+                hist.Bin('j1eta','AK4 Jet Eta',35,-3.5,3.5)),
             
             'j1phi': hist.Hist(
                 'Events', 
                 hist.Cat('dataset', 'Dataset'), 
                 hist.Cat('region', 'Region'), 
-                hist.Bin('j1phi','AK4 Leading Jet Phi',35,-3.5,3.5)),
+                hist.Bin('j1phi','AK4 Jet Phi',35,-3.5,3.5)),
             
             'ndflvL': hist.Hist(
                 'Events',
@@ -343,7 +274,85 @@ class AnalysisProcessor(processor.ProcessorABC):
                 'Events',
                 hist.Cat('dataset', 'Dataset'),
                 hist.Cat('region', 'Region'),
-                hist.Bin('njets', 'AK4 Number of Jets', 7, -0.5, 6.5)),
+                hist.Bin('njets', 'AK4 Number of Jets', 10, -0.5, 9.5)),
+
+            'bj1pt': hist.Hist(
+                'Events',
+                hist.Cat('dataset', 'Dataset'),
+                hist.Cat('region', 'Region'),
+                hist.Bin('bj1pt','AK4 1st b-Jet Pt',[30.0, 60.0, 90.0, 120.0, 150.0, 180.0, 210.0, 250.0, 280.0, 310.0, 340.0, 370.0, 400.0, 430.0, 470.0, 510.0, 550.0, 590.0, 640.0, 690.0, 740.0, 790.0, 840.0, 900.0, 960.0, 1020.0, 1090.0, 1160.0, 1250.0])
+            ),
+            'bj1eta': hist.Hist(
+                'Events',
+                hist.Cat('dataset', 'Dataset'),
+                hist.Cat('region', 'Region'),
+                hist.Bin('bj1eta','AK4 1st b-Jet Eta',35,-3.5,3.5)),
+            
+            'bj1phi': hist.Hist(
+                'Events', 
+                hist.Cat('dataset', 'Dataset'), 
+                hist.Cat('region', 'Region'), 
+                hist.Bin('bj1phi','AK4 1st b-Jet Phi',35,-3.5,3.5)),
+            
+            'bj2pt': hist.Hist(
+                'Events',
+                hist.Cat('dataset', 'Dataset'),
+                hist.Cat('region', 'Region'),
+                hist.Bin('bj2pt','AK4 2nd b-Jet Pt',[30.0, 60.0, 90.0, 120.0, 150.0, 180.0, 210.0, 250.0, 280.0, 310.0, 340.0, 370.0, 400.0, 430.0, 470.0, 510.0, 550.0, 590.0, 640.0, 690.0, 740.0, 790.0, 840.0, 900.0, 960.0, 1020.0, 1090.0, 1160.0, 1250.0])
+            ),
+            'bj2eta': hist.Hist(
+                'Events',
+                hist.Cat('dataset', 'Dataset'),
+                hist.Cat('region', 'Region'),
+                hist.Bin('bj2eta','AK4 2nd b-Jet Eta',35,-3.5,3.5)),
+            
+            'bj2phi': hist.Hist(
+                'Events', 
+                hist.Cat('dataset', 'Dataset'), 
+                hist.Cat('region', 'Region'), 
+                hist.Bin('bj2phi','AK4 2nd b-Jet Phi',35,-3.5,3.5)),
+            
+            'bj3pt': hist.Hist(
+                'Events',
+                hist.Cat('dataset', 'Dataset'),
+                hist.Cat('region', 'Region'),
+                hist.Bin('bj3pt','AK4 3rd b-Jet Pt',[30.0, 60.0, 90.0, 120.0, 150.0, 180.0, 210.0, 250.0, 280.0, 310.0, 340.0, 370.0, 400.0, 430.0, 470.0, 510.0, 550.0, 590.0, 640.0, 690.0, 740.0, 790.0, 840.0, 900.0, 960.0, 1020.0, 1090.0, 1160.0, 1250.0])
+            ),
+            'bj3eta': hist.Hist(
+                'Events',
+                hist.Cat('dataset', 'Dataset'),
+                hist.Cat('region', 'Region'),
+                hist.Bin('bj3eta','AK4 3rd b-Jet Eta',35,-3.5,3.5)),
+            
+            'bj3phi': hist.Hist(
+                'Events', 
+                hist.Cat('dataset', 'Dataset'), 
+                hist.Cat('region', 'Region'), 
+                hist.Bin('bj3phi','AK4 3rd b-Jet Phi',35,-3.5,3.5)),
+            
+            'bj4pt': hist.Hist(
+                'Events',
+                hist.Cat('dataset', 'Dataset'),
+                hist.Cat('region', 'Region'),
+                hist.Bin('bj4pt','AK4 4th b-Jet Pt',[30.0, 60.0, 90.0, 120.0, 150.0, 180.0, 210.0, 250.0, 280.0, 310.0, 340.0, 370.0, 400.0, 430.0, 470.0, 510.0, 550.0, 590.0, 640.0, 690.0, 740.0, 790.0, 840.0, 900.0, 960.0, 1020.0, 1090.0, 1160.0, 1250.0])
+            ),
+            'bj4eta': hist.Hist(
+                'Events',
+                hist.Cat('dataset', 'Dataset'),
+                hist.Cat('region', 'Region'),
+                hist.Bin('bj4eta','AK4 4th b-Jet Eta',35,-3.5,3.5)),
+            
+            'bj4phi': hist.Hist(
+                'Events', 
+                hist.Cat('dataset', 'Dataset'), 
+                hist.Cat('region', 'Region'), 
+                hist.Bin('bj4phi','AK4 4th b-Jet Phi',35,-3.5,3.5)),
+            
+            'nbjets': hist.Hist(
+                'Events',
+                hist.Cat('dataset', 'Dataset'),
+                hist.Cat('region', 'Region'),
+                hist.Bin('nbjets', 'AK4 Number of deepCSV Medium BJets', 10, -0.5, 9.5)),
 
             'ndcsvM': hist.Hist(
                 'Events',
@@ -381,6 +390,32 @@ class AnalysisProcessor(processor.ProcessorABC):
                 hist.Cat('dataset', 'Dataset'),
                 hist.Cat('region', 'Region'),
                 hist.Bin('mu_phi', 'Leading Muon Phi', 64, -3.2, 3.2)),
+
+            'dibjetpt' : hist.Hist(
+                'Events',
+                hist.Cat('dataset', 'Dataset'),
+                hist.Cat('region', 'Region'),
+                hist.Bin('dibjetpt', 'Di-BJet pT', [0.0, 30.0, 60.0, 90.0, 120.0, 150.0, 180.0, 210.0, 250.0, 280.0, 310.0, 340.0, 370.0, 400.0, 430.0, 470.0, 510.0, 550.0, 590.0, 640.0, 690.0, 740.0, 790.0, 840.0, 900.0, 960.0, 1020.0, 1090.0, 1160.0, 1250.0])),
+
+            'dibjetmass' : hist.Hist(
+                'Events',
+                hist.Cat('dataset', 'Dataset'),
+                hist.Cat('region', 'Region'),
+                hist.Bin('dibjetmass', 'Di-BJet Mass',[0.0, 30.0, 60.0, 90.0, 120.0, 150.0, 180.0, 210.0, 250.0, 280.0, 310.0, 340.0, 370.0, 400.0, 430.0, 470.0, 510.0, 550.0, 590.0, 640.0, 690.0, 740.0, 790.0, 840.0, 900.0, 960.0, 1020.0, 1090.0, 1160.0, 1250.0, 1500, 2000])),
+
+            'dibjeteta'  : hist.Hist(
+                'Events',
+                hist.Cat('dataset', 'Dataset'),
+                hist.Cat('region', 'Region'),
+                hist.Bin('dibjeteta', 'Di-BJet Mass Eta', 64, -3.2, 3.2)),
+
+
+            'dibjetphi'  : hist.Hist(
+                'Events',
+                hist.Cat('dataset', 'Dataset'),
+                hist.Cat('region', 'Region'),
+                hist.Bin('dibjetphi', 'Di-BJet Mass Phi', 64, -3.2, 3.2)),
+
             'cutflow': hist.Hist(
                 'Events',
                 hist.Cat('dataset', 'Dataset'),
@@ -392,10 +427,6 @@ class AnalysisProcessor(processor.ProcessorABC):
     @property
     def accumulator(self):
         return self._accumulator
-
-    @property
-    def fields(self):
-        return self._fields
 
     def process(self, events):
 
@@ -412,9 +443,8 @@ class AnalysisProcessor(processor.ProcessorABC):
         selection = processor.PackedSelection()
         hout = self.accumulator.identity()
 
-        ###
-        # Getting corrections, ids from .coffea files
-        ###
+        ###        # Getting corrections, ids from .coffea files        ###
+
         if ("preVFP" in dataset) and (self._year == '2016'):
             get_ele_loose_id_sf = self._corrections['get_ele_tight_id_sf_preVFP'][self._year]
             get_ele_tight_id_sf = self._corrections['get_ele_tight_id_sf_preVFP'][self._year]
@@ -542,36 +572,7 @@ class AnalysisProcessor(processor.ProcessorABC):
 
         # Initialize physics objects ###
 
-        '''
-        e = events.Electron
-        event_size = len(events)
         
-        
-        e['isclean'] = ak.all(e.metric_table(mu_loose) > 0.3, axis=-1)
-        e['isloose'] = isLooseElectron(e.pt, e.eta+e.deltaEtaSC, e.dxy, e.dz, e.cutBased, self._year)
-        e['istight'] = isTightElectron(e.pt, e.eta+e.deltaEtaSC, e.dxy, e.dz, e.cutBased, self._year)
-        e["T"] = ak.zip({"pt": e.pt, "phi": e.phi}, 
-                        with_name="PolarTwoVector", 
-                        behavior=vector.behavior)
-        e['p4'] = ak.zip({
-                            "pt": e.pt,
-                            "eta": e.eta,
-                            "phi": e.phi,
-                            "mass": e.mass},
-                            with_name="PtEtaPhiMLorentzVector",
-        )
-        e_clean = e[ak.values_astype(e.isclean, np.bool)]
-        e_loose = e_clean[ak.values_astype(e_clean.isloose, np.bool)]
-        e_tight = e_clean[ak.values_astype(e_clean.istight, np.bool)]
-        e_ntot = ak.num(e, axis=1)
-        e_nloose = ak.num(e_loose, axis=1)
-
-        #         e_nloose = e_loose.counts
-        e_ntight = ak.num(e_tight, axis=1)
-        leading_e = e_tight[:,:1]
-
-
-
         mu = events.Muon
         
         mu['isloose'] = isLooseMuon(mu.pt, mu.eta, mu.pfRelIso04_all, mu.looseId, self._year)
@@ -596,8 +597,31 @@ class AnalysisProcessor(processor.ProcessorABC):
         mu_ntight = ak.num(mu_tight, axis=1)
         leading_mu = mu_tight[:,:1]
         
+        e = events.Electron
+        event_size = len(events)
         
-        
+        e['isclean'] = ak.all(e.metric_table(mu_loose) > 0.3, axis=-1)
+        e['isloose'] = isLooseElectron(e.pt, e.eta+e.deltaEtaSC, e.dxy, e.dz, e.cutBased, self._year)
+        e['istight'] = isTightElectron(e.pt, e.eta+e.deltaEtaSC, e.dxy, e.dz, e.cutBased, self._year)
+        e["T"] = ak.zip({"pt": e.pt, "phi": e.phi}, 
+                        with_name="PolarTwoVector", 
+                        behavior=vector.behavior)
+        e['p4'] = ak.zip({
+                            "pt": e.pt,
+                            "eta": e.eta,
+                            "phi": e.phi,
+                            "mass": e.mass},
+                            with_name="PtEtaPhiMLorentzVector",
+        )
+        e_clean = e[ak.values_astype(e.isclean, np.bool)]
+        e_loose = e_clean[ak.values_astype(e_clean.isloose, np.bool)]
+        e_tight = e_clean[ak.values_astype(e_clean.istight, np.bool)]
+        e_ntot = ak.num(e, axis=1)
+        e_nloose = ak.num(e_loose, axis=1)
+
+        #         e_nloose = e_loose.counts
+        e_ntight = ak.num(e_tight, axis=1)
+        leading_e = e_tight[:,:1]
 
         tau = events.Tau
         tau['isclean'] = ak.all(tau.metric_table(mu_loose) > 0.4, axis=-1) & ak.all(tau.metric_table(e_loose) > 0.4, axis=-1)
@@ -636,8 +660,7 @@ class AnalysisProcessor(processor.ProcessorABC):
         leading_pho = leading_pho[ak.values_astype(leading_pho.isclean, np.bool)]
         
         leading_pho = leading_pho[ak.values_astype(leading_pho.istight, np.bool)]
-        leading_pho = leading_pho[ak.values_astype(leading_pho.istight, np.bool)]
-        '''
+        
 
         j = events.Jet
         j['isgood'] = isGoodJet(j.pt, j.eta, j.jetId, j.puId, j.neHEF, j.chHEF, self._year)
@@ -658,7 +681,6 @@ class AnalysisProcessor(processor.ProcessorABC):
         with_name="PtEtaPhiMLorentzVector",
         )
         
-        #j_dflvL = j_clean[j_clean.isdflvL.astype(np.bool)]
         jetMuMask = ak.all(j.metric_table(mu_loose) > 0.4, axis=-1)
         jetEleMask = ak.all(j.metric_table(e_loose) > 0.4, axis=-1)
         jetPhoMask = ak.all(j.metric_table(pho_loose) > 0.4, axis=-1)
@@ -667,12 +689,51 @@ class AnalysisProcessor(processor.ProcessorABC):
         j_isgood_mask = isGoodJet(j.pt, j.eta, j.jetId, j.puId, j.neHEF, j.chHEF, self._year)
         j_good_clean = j[j_isclean_mask & j_isgood_mask]
         j_ngood_clean = ak.num(j_good_clean)
-        j_good_clean_dflvB = j_good_clean.isdflvM
-        j_ndflvM = ak.num(j[j_good_clean_dflvB])
         leading_j = j_good_clean[:,:1] # new way to define leading jet
+        #j_good_clean_dflvB = j_good_clean.isdflvM
+        print('good clean jet len: ', len(j_good_clean), 'leading jet len: ', len(leading_j), leading_j.pt)
+        
+        j_good_clean_dflvB = j_good_clean[j_good_clean.isdflvM]
+        
+        j_ndflvM=ak.num(j_good_clean_dflvB)
+
         j_HEM = j[ak.values_astype(j.isHEM, np.bool)]       
         j_nHEM = ak.num(j_HEM, axis=1)
         atleast_one_jet_with_pt_grt_50 = ((ak.num(j_good_clean)>=1) & ak.any(j_good_clean.pt>=50, axis=-1))
+        print('good clean B jet', j_good_clean_dflvB.pt, len(j_good_clean_dflvB.pt))
+
+        #print('number of dflvB ', ak.num(j_good_clean_dflvB), len(ak.num(j_good_clean_dflvB)), (ak.num(j_good_clean_dflvB) == 4))
+        #select_4bjets = j_good_clean_dflvB[(ak.num(j_good_clean_dflvB) == 4)]
+        #select_4bjets = j_good_clean_dflvB[ak.num(j_good_clean_dflvB) >= 4]
+        #print('good clean B 4 jet: ', select_4bjets, len(select_4bjets))
+        #print('1st good clean B pt: ', select_4bjets[:,:1], len(select_4bjets[:,:1]))
+        #print('2nd good clean B pt: ', select_4bjets[:,1:2], len(select_4bjets[:,1:2]))
+        #onebjets = ak.firsts(select_4bjets[ak.num(j_good_clean_dflvB) >= 4][:,:1])
+
+        #onebjets = j_good_clean_dflvB[(ak.num(j_good_clean_dflvB) == 4)][:,:1]
+        onebjets = j_good_clean_dflvB[:,:1]
+
+        print('first b jet ', onebjets.pt, len(onebjets.pt))
+        #twobjets = j_good_clean_dflvB[(ak.num(j_good_clean_dflvB) >= 4)][:,1:2]
+        twobjets = j_good_clean_dflvB[:,1:2]
+        print('second b jet', twobjets.pt, len(twobjets.pt))
+        threebjets = j_good_clean_dflvB[:,2:3]
+        fourbjets = j_good_clean_dflvB[:,3:4]
+
+        #dibjet = j_good_clean_dflvB[:,:1]
+        dibj = ak.cartesian({"onebj":onebjets,"twobj":twobjets})
+        print('dibj', dibj.fields)
+        dibjet = dibj.onebj + dibj.twobj
+        print('dibjet', dibjet, dibjet.pt)
+        #threebjets = select_4bjets[:,2]
+        #fourbjets = select_4bjets[:,3]
+        #twojets = j_good_clean_dflvB[ak.num(j_good_clean_dflvB) >= 2]
+        #print('twojets: ', twojets.pt)
+        #dibjet = twojets[:,0] + twojets[:,1]
+        #print('twobjets: ', twobjets.pt)
+        
+        #twojets = j_good_clean_dflvB
+        #dibjet = ak.firsts(j_good_clean_dflvB[:, :1]) + ak.firsts(j_good_clean_dflvB[:, 1:2])
         
         # *****btag
         # https://twiki.cern.ch/twiki/bin/viewauth/CMS/BtagRecommendation102X#Supported_Algorithms_and_Operati
@@ -718,38 +779,12 @@ class AnalysisProcessor(processor.ProcessorABC):
             genTops = gen[gen.isTop]
             ttjet_weights = np.ones(event_size)
             if('TTJets' in dataset):
-                ttjet_weights = np.sqrt(get_ttbar_weight(genTops.pt.sum()) * get_ttbar_weight(genTops.pt.sum()))
+                ttjet_weights = np.sqrt(get_ttbar_weight(ak.sum(genTops.pt, axis=-1)) * get_ttbar_weight(ak.sum(genTops.pt, axis=-1)))
+                #ttjet_weights = np.sqrt(get_ttbar_weight(genTops.pt.sum()) * get_ttbar_weight(genTops.pt.sum()))
 
             gen['isW'] = (abs(gen.pdgId) == 24) & gen.hasFlags(['fromHardProcess', 'isLastCopy'])
             gen['isZ'] = (abs(gen.pdgId) == 23) & gen.hasFlags(['fromHardProcess', 'isLastCopy'])
             gen['isA'] = (abs(gen.pdgId) == 22) & gen.hasFlags(['isPrompt', 'fromHardProcess', 'isLastCopy']) & (gen.status == 1)
-
-
-
-            genZs = gen[gen.isZ & (gen.pt > 100)]
-            genDYs = gen[gen.isZ & (gen.mass > 30)]
-            # Based on photon weight distribution
-            #genIsoAs = gen[gen.isIsoA & (gen.pt > 100)]
-            
-            nnlo_nlo = {}
-            nlo_qcd = np.ones(event_size)
-            nlo_ewk = np.ones(event_size)
-            if ('WJetsToLNu' in dataset) & ('HT' in dataset):
-                nlo_qcd = get_nlo_qcd_weight['w'](ak.max(genWs.pt, axis=1))
-                nlo_ewk = get_nlo_ewk_weight['w'](ak.max(genWs.pt, axis=1))
-                for systematic in get_nnlo_nlo_weight['w']:
-                    nnlo_nlo[systematic] = get_nnlo_nlo_weight['w'][systematic](ak.max(genWs.pt))*ak.values_astype((ak.num(genWs,axis=1) > 0), np.int) + ak.values_astype(~(ak.num(genWs, axis=1) > 0), np.int)
-
-            elif('DY' in dataset):
-                nlo_qcd = get_nlo_qcd_weight['dy'](ak.max(genDYs.pt, axis=1))
-                nlo_ewk = get_nlo_ewk_weight['dy'](ak.max(genDYs.pt, axis=1))
-                for systematic in get_nnlo_nlo_weight['dy']:
-                    nnlo_nlo[systematic] = get_nnlo_nlo_weight['dy'][systematic](ak.max(genDYs.pt))*ak.values_astype((ak.num(genZs, axis=1) > 0), np.int) + ak.values_astype(~(ak.num(genZs, axis=1) > 0), np.int)
-            elif('ZJets' in dataset):
-                nlo_qcd = get_nlo_qcd_weight['z'](ak.max(genZs.pt, axis=1))
-                nlo_ewk = get_nlo_ewk_weight['z'](ak.max(genZs.pt, axis=1))
-                for systematic in get_nnlo_nlo_weight['z']:
-                    nnlo_nlo[systematic] = get_nnlo_nlo_weight['z'][systematic](ak.max(genZs.pt))*ak.values_astype((ak.num(genZs, axis=1) > 0), np.int) + ak.values_astype(~(ak.num(genZs, axis=1) > 0), np.int)
 
             ###
             # Calculate PU weight and systematic variations
@@ -819,9 +854,7 @@ class AnalysisProcessor(processor.ProcessorABC):
             '''
             if in a region you are asking for 0 btags, you have to apply the 0-btag weight
             if in a region you are asking for at least 1 btag, you need to apply the -1-btag weight
-
             it’s “-1” because we want to reserve “1" to name the weight that should be applied when you ask for exactly 1 b-tag
-
             that is different from the weight you apply when you ask for at least 1 b-tag
             '''
             #             if 'preVFP' in dataset:
@@ -830,6 +863,7 @@ class AnalysisProcessor(processor.ProcessorABC):
             #                 VFP_status = 'postVFP'
             #             else:
             # #                 VFP_status = False
+
             btag = {}
             btagUp = {}
             btagDown = {}
@@ -852,18 +886,26 @@ class AnalysisProcessor(processor.ProcessorABC):
 
         triggers = np.zeros(event_size, dtype=np.bool)
         for path in self._jet_triggers[self._year]:
+            print('jet trigger1: ', path)
             if path not in events.HLT.fields:
                 continue
+            print('jet trigger2: ', path)
             triggers = triggers | events.HLT[path]
         selection.add('jet_triggers', ak.to_numpy(triggers))
 
-        noHEMj = np.ones(event_size, dtype=np.bool)
-#        if self._year == '2018':
-#            noHEMj = (j_nHEM == 0)
+        triggers = np.zeros(event_size, dtype=np.bool)
+        for path in self._jet_triggers_sr[self._year]:
+            if path not in events.HLT.fields:
+                continue
+            triggers = triggers | events.HLT[path]
+        selection.add('jet_triggers_sr', ak.to_numpy(triggers))
 
-#        noHEMmet = np.ones(event_size, dtype=np.bool)
-#        if self._year == '2018':
-#            noHEMmet = (met.pt > 470) | (met.phi > -0.62) | (met.phi < -1.62)
+        noHEMj = np.ones(event_size, dtype=np.bool)
+        #if self._year == '2018':
+            #noHEMj = (j_nHEM == 0)
+        #noHEMmet = np.ones(event_size, dtype=np.bool)
+        #if self._year == '2018':
+            #noHEMmet = (met.pt > 470) | (met.phi > -0.62) | (met.phi < -1.62)
 
         selection.add('DeltaR_LJ_mask',ak.to_numpy(DeltaR_LJ_Ele_mask | DeltaR_LJ_Mu_mask))
         selection.add('isoneM', ak.to_numpy((e_nloose == 0) & (mu_ntight == 1) & ( mu_nloose == 1)))
@@ -874,23 +916,22 @@ class AnalysisProcessor(processor.ProcessorABC):
         selection.add('zero_medium_btags', ak.to_numpy(j_ndflvM == 0))
 
         selection.add('noHEMj', ak.to_numpy(noHEMj))
-#        selection.add('noHEMmet', ak.to_numpy(noHEMmet))
+        #        selection.add('noHEMmet', ak.to_numpy(noHEMmet))
         selection.add('DeltaR_LJ_Ele_mask', ak.to_numpy((DeltaR_LJ_Ele_mask)>0))
 
         selection.add('one_muon', ak.to_numpy(ak.num(mu_tight, axis=1) == 1))
         selection.add('zero_loose_electron', ak.to_numpy(ak.num(e_loose, axis=1) == 0))
         selection.add('DeltaR_LJ_Mu_mask', ak.to_numpy((DeltaR_LJ_Mu_mask)>0))
         selection.add('atleast_4_medium_btag', ak.to_numpy(j_ndflvM >= 4))
-        for region in mT.keys():
-            sel_name = 'mt'+'_'+region+'>50'
-            select = (mT[region] > 50)
-            selection.add(sel_name, ak.to_numpy(ak.sum(select,axis=1)>0))
-        selection.add('leading_j>70',ak.to_numpy(ak.sum(leading_j.pt, axis=1) >70))# from the monotop paper
+
+        selection.add('leading_j>70',ak.to_numpy(ak.sum(leading_j.pt, axis=1) >70)) # 
         selection.add('atleast_one_jet_with_pt_grt_50',ak.to_numpy(atleast_one_jet_with_pt_grt_50))
 
-#         print(selection.all())
+        
+        
+        #print(selection.all())
         regions = {
-            'sr':['met_filters', 'jet_triggers', 'atleast_4_medium_btag']
+            'sr':['met_filters', 'jet_triggers']
         }
         isFilled = False
         for region, cuts in regions.items():
@@ -900,42 +941,78 @@ class AnalysisProcessor(processor.ProcessorABC):
             variables = {
 
                 'mu_pT':               mu_tight.pt,
-                'ele_pT':              e_tight.pt,
-#                'jet_pT':              leading_j.pt,
-                'j1pt':                leading_j.pt,
-                'j1eta':               leading_j.eta,
-                'j1phi':               leading_j.phi,
-                'njets':               j_nclean,
-                'ndflvL':                 j_ndflvL,
-                'ndcsvL':     j_ndcsvL,
-                'e1pt'      : leading_e.pt,
-                'ele_phi'     : leading_e.phi,
-                'ele_eta'     : leading_e.eta,
-#                'dijetmass' : leading_dijet.mass,
-#                'dijetpt'   : leading_dijet.pt,
-#                'dijetphi'   : leading_dijet.phi,
-                'mu1pt' : leading_mu.pt,
                 'mu_phi' : leading_mu.phi,
                 'mu_eta' : leading_mu.eta,
+                'ele_pT':              e_tight.pt,
+                'ele_phi'     : leading_e.phi,
+                'ele_eta'     : leading_e.eta,
+                'j1pt':                j_good_clean.pt,
+                'j1eta':               j_good_clean.eta,
+                'j1phi':               j_good_clean.phi,
+                'njets':               j_ngood_clean,
+                'e1pt'      : leading_e.pt,
+                'nbjets'      : j_ndflvM,
                 'dr_e_lj': DeltaR_LJ_Ele,
                 'dr_mu_lj': DeltaR_LJ_Mu,
-#                'njetsclean':                  j_ngood_clean,
-#                'ndflvM':                 j_ndflvM,
-#                'ndcsvM':     j_ndcsvM,
             }
+
+            bj_variables = {
+                'bj1pt':                onebjets.pt,
+                'bj1eta':               onebjets.eta,
+                'bj1phi':               onebjets.phi,
+                'bj2pt':                twobjets.pt,
+                'bj2eta':               twobjets.eta,
+                'bj2phi':               twobjets.phi,
+                'bj3pt':                threebjets.pt,
+                'bj3eta':               threebjets.eta,
+                'bj3phi':               threebjets.phi,
+                'bj4pt':                fourbjets.pt,
+                'bj4eta':               fourbjets.eta,
+                'bj4phi':               fourbjets.phi,
+                'dibjetpt' : dibjet.pt,
+                'dibjetmass' : dibjet.mass,
+                'dibjeteta'   : dibjet.eta,
+                'dibjetphi'  : dibjet.phi,
+            }
+
             def fill(dataset, weight, cut):
+                print('cut in fill func', cut,len(cut))
+                for k, v in variables.items():
+                    print('k: ', k, 'v:', v, len(v))
+                    #print('k v[cut]:', v[cut])
+                    #print('k flatten:', ak.flatten(v[cut], axis=None))
+                for kk, vv in bj_variables.items():
+                    print('kk: ', kk, 'vv: ', vv, len(vv))
+                    #print('kk v[cut]:', vv[vcut])
+                    #print('k flatten:', ak.flatten(vv[cut], axis=None))
 
                 flat_variables = {k: ak.flatten(v[cut], axis=None) for k, v in variables.items()}
+                #print('flat variables', flat_variables)
+                bjet_variables = {kk: ak.flatten(vv[cut], axis=None) for kk, vv in bj_variables.items()}
+                #print('bjet variables', bjet_variables)
                 flat_weight = {k: ak.flatten(~np.isnan(v[cut])*weight[cut], axis=None) for k, v in variables.items()}
+                #print(' variable items: ', variables.items())
+                #print('bj variable items: ', bj_variables.items())
+                
+                #bjet_weight = {kk: ak.flatten(~np.isnan(vv[cut])*weight[cut], axis=None) for kk, vv in bj_variables.items()}
                 for histname, h in hout.items():
+                    print('fill hist - ', histname, '-->', h)
                     if not isinstance(h, hist.Hist):
                         continue
+                    if histname in bj_variables:
+                        flat_variable = {histname: ak.flatten(bj_variables[histname])}
+                        print('flat variable: ', flat_variable)
+                        h.fill(dataset=dataset,
+                               region=region,
+                               **flat_variable)
+                               #weight=bjet_weight[histname])
                     if histname not in variables:
                         continue
                     elif histname == 'sumw':
                         continue
                     else:
                         flat_variable = {histname: flat_variables[histname]}
+                        print('flat variable: ', flat_variable)
                         h.fill(dataset=dataset,
                                region=region,
                                **flat_variable,
@@ -952,14 +1029,12 @@ class AnalysisProcessor(processor.ProcessorABC):
                 if 'L1PreFiringWeight' in events.fields:
                     weights.add('prefiring', events.L1PreFiringWeight.Nom)
                 weights.add('genw', events.genWeight)
-                weights.add('nlo_qcd', nlo_qcd)
-                weights.add('nlo_ewk', nlo_ewk)
-                weights.add('ttjet_weights', ttjet_weights)
+#                weights.add('nlo_qcd', nlo_qcd)
+#                weights.add('nlo_ewk', nlo_ewk)
+                #weights.add('ttjet_weights', ttjet_weights)
                 weights.add('pileup', pu)
                 if 'WJets' in dataset or 'DY' in dataset or 'ZJets' in dataset or 'GJets' in dataset:
                     if not isFilled:
-#                         print(events.genWeight)
-#                         print(len(events.genWeight))
                         hout['sumw'].fill(dataset='HF--'+dataset, sumw=1, weight=ak.sum(events.genWeight))
                         hout['sumw'].fill(dataset='LF--'+dataset, sumw=1, weight=ak.sum(events.genWeight))
                         isFilled = True
@@ -1048,10 +1123,14 @@ class AnalysisProcessor(processor.ProcessorABC):
                     vcut=np.zeros(event_size, dtype=np.int)
                     hout['cutflow'].fill(dataset=dataset, region=region, cut=vcut, weight=weights.weight())
                     allcuts = set()
+                    print('before fill dataset', dataset)
+                    print('before fill weight', weights.weight(), len(weights.weight()))
+                    print('before fill cut', cut, len(cut))
                     for i, icut in enumerate(cuts):
                         allcuts.add(icut)
                         jcut = selection.all(*allcuts)
                         vcut = (i+1)*jcut
+                        print('cut', i, 'sel:', icut)
                         hout['cutflow'].fill(dataset=dataset, region=region, cut=vcut, weight=weights.weight()*jcut)
                     fill(dataset, weights.weight(), cut)
 #         time.sleep(0.5)
@@ -1085,8 +1164,9 @@ if __name__ == '__main__':
     parser.add_option('-y', '--year', help='year', dest='year')
     (options, args) = parser.parse_args()
 
-#    with open('metadata/UL_'+options.year+'.json') as fin:
-    with open('metadata/BFF_2017_v1.json') as fin:
+    #with open('metadata/UL_'+options.year+'.json') as fin:
+    with open('metadata/BFF_2017_T2_KR_KISTI.json') as fin:
+    #with open('metadata/Signal.json') as fin:
         samplefiles = json.load(fin)
         xsec = {k: v['xs'] for k, v in samplefiles.items()}
 
@@ -1100,5 +1180,10 @@ if __name__ == '__main__':
                                            ids=ids,
                                            common=common)
 
-    save(processor_instance, 'data/UL_BFF_v1_test_'+options.year+'.processor')
-    print("processor name: UL_BFF_v1_test_{}".format(options.year))
+    #save(processor_instance, 'data/UL_BFF_v1_test_v3_'+options.year+'.processor')
+    #save(processor_instance, 'data/UL_BFF_v1_test_v4_'+options.year+'.processor')
+    save(processor_instance, 'data/UL_BFF_test_'+options.year+'.processor')
+    #save(processor_instance, 'data/test_'+options.year+'.processor')
+    #print("processor name: test_{}".format(options.year))
+    #print("processor name: UL_BFF_v1_test_v4_{}".format(options.year))
+    print("processor name: UL_BFF_test_{}".format(options.year))

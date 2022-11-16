@@ -1,0 +1,15 @@
+
+Couldn't find a valid proxy.
+
+Traceback (most recent call last):
+  File "run.py", line 31, in <module>
+    processor_instance=load('data/'+options.processor+'.processor')
+  File "/var/lib/condor/execute/dir_21398/site-packages/coffea/util.py", line 21, in load
+    with lz4.frame.open(filename) as fin:
+  File "/var/lib/condor/execute/dir_21398/site-packages/lz4/frame/__init__.py", line 831, in open
+    return_bytearray=return_bytearray,
+  File "/var/lib/condor/execute/dir_21398/site-packages/lz4/frame/__init__.py", line 510, in __init__
+    self._fp = builtins.open(filename, mode)
+FileNotFoundError: [Errno 2] No such file or directory: 'data/UL_BFF_v1_test_v3_2017.processor'
+ls: cannot access hists/UL_BFF_v1_test_v3_2017/QCD_HT700to1000_TuneCP5_PSWeights_13TeV-madgraph-pythia8____4_.futures: No such file or directory
+cp: cannot stat 'hists/UL_BFF_v1_test_v3_2017/QCD_HT700to1000_TuneCP5_PSWeights_13TeV-madgraph-pythia8____4_.futures': No such file or directory

@@ -1,0 +1,96 @@
+000 (2423781.000.000) 11/14 15:08:11 Job submitted from host: <134.75.124.121:9618?addrs=134.75.124.121-9618&noUDP&sock=1581128_dfb7_3>
+...
+001 (2423781.000.000) 11/14 15:08:27 Job executing on host: <134.75.127.147:9618?addrs=134.75.127.147-9618&noUDP&sock=26061_41be_67>
+...
+006 (2423781.000.000) 11/14 15:08:35 Image size of job updated: 433536
+	66  -  MemoryUsage of job (MB)
+	67244  -  ResidentSetSize of job (KB)
+...
+006 (2423781.000.000) 11/14 15:13:35 Image size of job updated: 15841564
+	2335  -  MemoryUsage of job (MB)
+	2390028  -  ResidentSetSize of job (KB)
+...
+006 (2423781.000.000) 11/14 15:18:36 Image size of job updated: 15841564
+	2429  -  MemoryUsage of job (MB)
+	2486548  -  ResidentSetSize of job (KB)
+...
+006 (2423781.000.000) 11/14 15:23:37 Image size of job updated: 16425964
+	3099  -  MemoryUsage of job (MB)
+	3172768  -  ResidentSetSize of job (KB)
+...
+006 (2423781.000.000) 11/14 15:58:41 Image size of job updated: 16425964
+	3193  -  MemoryUsage of job (MB)
+	3269520  -  ResidentSetSize of job (KB)
+...
+006 (2423781.000.000) 11/14 16:03:42 Image size of job updated: 16557176
+	3193  -  MemoryUsage of job (MB)
+	3269520  -  ResidentSetSize of job (KB)
+...
+006 (2423781.000.000) 11/14 16:08:42 Image size of job updated: 17060296
+	3794  -  MemoryUsage of job (MB)
+	3884456  -  ResidentSetSize of job (KB)
+...
+006 (2423781.000.000) 11/14 16:13:42 Image size of job updated: 17268276
+	3794  -  MemoryUsage of job (MB)
+	3884456  -  ResidentSetSize of job (KB)
+...
+006 (2423781.000.000) 11/14 16:18:42 Image size of job updated: 17268276
+	3894  -  MemoryUsage of job (MB)
+	3987356  -  ResidentSetSize of job (KB)
+...
+006 (2423781.000.000) 11/14 16:23:43 Image size of job updated: 17363456
+	3971  -  MemoryUsage of job (MB)
+	4065316  -  ResidentSetSize of job (KB)
+...
+006 (2423781.000.000) 11/14 16:28:44 Image size of job updated: 17368064
+	3971  -  MemoryUsage of job (MB)
+	4065316  -  ResidentSetSize of job (KB)
+...
+006 (2423781.000.000) 11/14 17:03:46 Image size of job updated: 17457600
+	4162  -  MemoryUsage of job (MB)
+	4261160  -  ResidentSetSize of job (KB)
+...
+006 (2423781.000.000) 11/14 17:08:46 Image size of job updated: 17540224
+	4162  -  MemoryUsage of job (MB)
+	4261160  -  ResidentSetSize of job (KB)
+...
+006 (2423781.000.000) 11/14 17:18:48 Image size of job updated: 17762840
+	4220  -  MemoryUsage of job (MB)
+	4320644  -  ResidentSetSize of job (KB)
+...
+006 (2423781.000.000) 11/14 17:23:48 Image size of job updated: 17762840
+	4236  -  MemoryUsage of job (MB)
+	4336664  -  ResidentSetSize of job (KB)
+...
+006 (2423781.000.000) 11/14 17:28:48 Image size of job updated: 18482856
+	5118  -  MemoryUsage of job (MB)
+	5239892  -  ResidentSetSize of job (KB)
+...
+004 (2423781.000.000) 11/15 18:34:26 Job was evicted.
+	(0) Job was not checkpointed.
+		Usr 0 00:13:50, Sys 0 00:01:07  -  Run Remote Usage
+		Usr 0 00:00:00, Sys 0 00:00:00  -  Run Local Usage
+	0  -  Run Bytes Sent By Job
+	14694  -  Run Bytes Received By Job
+	Partitionable Resources :    Usage  Request Allocated 
+	   Cpus                 :        0        7         7 
+	   Disk (KB)            :   737995 52428800  52804278 
+	   Memory (MB)          :     5118    21504     21504 
+...
+001 (2423781.000.000) 11/15 18:34:47 Job executing on host: <134.75.127.147:9618?addrs=134.75.127.147-9618&noUDP&sock=26061_41be_67>
+...
+005 (2423781.000.000) 11/15 18:36:39 Job terminated.
+	(1) Normal termination (return value 1)
+		Usr 0 00:00:14, Sys 0 00:00:07  -  Run Remote Usage
+		Usr 0 00:00:00, Sys 0 00:00:00  -  Run Local Usage
+		Usr 0 00:14:04, Sys 0 00:01:14  -  Total Remote Usage
+		Usr 0 00:00:00, Sys 0 00:00:00  -  Total Local Usage
+	1437707  -  Run Bytes Sent By Job
+	14694  -  Run Bytes Received By Job
+	1437707  -  Total Bytes Sent By Job
+	29388  -  Total Bytes Received By Job
+	Partitionable Resources :    Usage  Request Allocated 
+	   Cpus                 :        0        7         7 
+	   Disk (KB)            :  1642746 52428800  52804278 
+	   Memory (MB)          :     7325    21504     21504 
+...

@@ -1,0 +1,47 @@
+000 (2423780.000.000) 11/14 15:08:11 Job submitted from host: <134.75.124.121:9618?addrs=134.75.124.121-9618&noUDP&sock=1581128_dfb7_3>
+...
+001 (2423780.000.000) 11/14 15:08:27 Job executing on host: <134.75.127.147:9618?addrs=134.75.127.147-9618&noUDP&sock=26061_41be_67>
+...
+006 (2423780.000.000) 11/14 15:08:35 Image size of job updated: 599476
+	1  -  MemoryUsage of job (MB)
+	624  -  ResidentSetSize of job (KB)
+...
+006 (2423780.000.000) 11/14 15:13:35 Image size of job updated: 15669508
+	2141  -  MemoryUsage of job (MB)
+	2191640  -  ResidentSetSize of job (KB)
+...
+006 (2423780.000.000) 11/14 15:18:36 Image size of job updated: 16619536
+	2900  -  MemoryUsage of job (MB)
+	2969388  -  ResidentSetSize of job (KB)
+...
+006 (2423780.000.000) 11/14 15:23:36 Image size of job updated: 17820604
+	4538  -  MemoryUsage of job (MB)
+	4646144  -  ResidentSetSize of job (KB)
+...
+006 (2423780.000.000) 11/14 15:28:36 Image size of job updated: 18981896
+	4722  -  MemoryUsage of job (MB)
+	4835236  -  ResidentSetSize of job (KB)
+...
+006 (2423780.000.000) 11/14 15:33:37 Image size of job updated: 19170072
+	5770  -  MemoryUsage of job (MB)
+	5908328  -  ResidentSetSize of job (KB)
+...
+006 (2423780.000.000) 11/14 15:38:38 Image size of job updated: 19541712
+	6144  -  MemoryUsage of job (MB)
+	6290784  -  ResidentSetSize of job (KB)
+...
+005 (2423780.000.000) 11/14 15:39:10 Job terminated.
+	(1) Normal termination (return value 0)
+		Usr 0 00:17:51, Sys 0 00:01:05  -  Run Remote Usage
+		Usr 0 00:00:00, Sys 0 00:00:00  -  Run Local Usage
+		Usr 0 00:17:51, Sys 0 00:01:05  -  Total Remote Usage
+		Usr 0 00:00:00, Sys 0 00:00:00  -  Total Local Usage
+	2193897  -  Run Bytes Sent By Job
+	14694  -  Run Bytes Received By Job
+	2193897  -  Total Bytes Sent By Job
+	14694  -  Total Bytes Received By Job
+	Partitionable Resources :     Usage  Request Allocated 
+	   Cpus                 :      0.03        7         7 
+	   Disk (KB)            : 738307    52428800  52804278 
+	   Memory (MB)          :   6144       21504     21504 
+...

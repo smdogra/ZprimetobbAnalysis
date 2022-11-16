@@ -12,9 +12,11 @@ def scale_file(file):
 
     print('Loading file:',file)    
     hists=load(file)
+    print('hists sumw', hists['sumw'].identifiers('dataset'))
 
     pd = []
     for d in hists['sumw'].identifiers('dataset'):
+        print('sumw dataset', d)
         dataset = d.name
         if dataset.split("____")[0] not in pd: pd.append(dataset.split("____")[0])
     print('List of primary datasets:',pd)
@@ -62,7 +64,7 @@ def scale(hists):
     for key in hists.keys():
         if key=='sumw': continue
         for d in hists[key].identifiers('dataset'):
-            if 'MET' in d.name or 'SingleElectron' in d.name or 'SinglePhoton' in d.name or 'EGamma' in d.name or 'SingleMuon' in d.name: continue
+            if 'BT' in d.name or 'MET' in d.name or 'SingleElectron' in d.name or 'SinglePhoton' in d.name or 'EGamma' in d.name or 'SingleMuon' in d.name: continue
             hists[key].scale({d:1/scale[d]},axis='dataset')
             print('scale[',d,']: ', scale[d])
     print('Histograms scaled')
@@ -80,58 +82,26 @@ def scale(hists):
     sig_map = OrderedDict()
     bkg_map = OrderedDict()
     data_map = OrderedDict()
-    bkg_map["Hbb"] = ("*HTo*")
-    bkg_map["DY"] = ("DYJets*",)
-    bkg_map["DY+HF"] = ("HF--DYJets*",)
-    bkg_map["DY+LF"] = ("LF--DYJets*",)
-    bkg_map["DY+jetsLO"] = ("lo--DYJets*",)
-    bkg_map["DY+jetsNNLO"] = ("nnlo--DYJets*",)
-    #bkg_map["VV"] = (["WW*","WZ*","ZZ*"],)
     
-    bkg_map["WW"] = ("WW*", )
-    bkg_map["WZ"] = ("WZ*", )
-    bkg_map["ZZ"] = ("ZZ*", )
-    bkg_map["ST"] = ("ST*",)
-    bkg_map["TT"] = ("TT*",)
-    bkg_map["WJets"] = ("WJets*",)
-    bkg_map["W+HF"] = ("HF--WJets*",)
-#     bkg_map["W+HFc"] = ("HFc--WJets*",)
-    bkg_map["W+LF"] = ("LF--WJets*",)
-    bkg_map["W+jetsLO"] = ("lo--WJets*",)
-    bkg_map["W+jetsNNLO"] = ("nnlo--WJets*",)
 
-    bkg_map["ZJets"] = (["ZJets*","Z1Jets*","Z2Jets*"])
-    #bkg_map["ZJets"] = ("ZJets*",)
-    #bkg_map["ZJets"] = ("Z1Jets*",)
-    #bkg_map["ZJets"] = ("Z2Jets*",)
-    bkg_map["Z+HF"] = ("HF--ZJetsToNuNu*",)
-    bkg_map["Z+LF"] = ("LF--ZJetsToNuNu*",)
-    bkg_map["Z+jetsLO"] = ("lo--ZJets*",)
-    bkg_map["Z+jetsNNLO"] = ("nnlo--ZJets*",)
     
-    bkg_map["GJets"] = (["GJets*","G1Jet*"])
-    #bkg_map["GJets"] = ("GJets*",)
-    #bkg_map["G1Jet"] = ("G1Jet*",)
-    bkg_map["G+HF"] = ("HF--GJets*",)
-    bkg_map["G+LF"] = ("LF--GJets*",)
-    bkg_map["G+jetsLO"] = ("lo--GJets*",)
-    bkg_map["G+jetsNNLO"] = ("nnlo--GJets*",)
     
     bkg_map["QCD"] = ("*QCD*",)
-    sig_map["Mphi-1995_Mchi-1000"] = ("*Mphi-1995_Mchi-1000*",)  ## signals
-#     sig_map["Mhs_50"] = ("*Mhs_50*",)  ## signals
-#     sig_map["Mhs_70"] = ("*Mhs_70*",)
-#     sig_map["Mhs_90"] = ("*Mhs_90*",)
-#     sig_map["MonoJet"] = ("MonoJet*",)  ## signals
-#     sig_map["MonoW"] = ("MonoW*",)    ## signals
-#     sig_map["MonoZ"] = ("MonoZ*",)    ## signals
-    data_map["MET"] = ("MET*", )
-    data_map["SingleElectron"] = ("SingleElectron*", )
-    data_map["SinglePhoton"] = ("SinglePhoton*", )
-    data_map["SingleMuon"] = ("SingleMuon*", )
-    data_map["EGamma"] = ("EGamma*", )
-    data_map["Data"] = (["SingleElectron","SinglePhoton"], )
+    bkg_map["TTJet"] = ("*TT*",)
+    sig_map["ZprimeTobb200_dbs0p04"] = ("*ZprimeTobb200_dbs0p04*",)  ## signals
+    sig_map["ZprimeTobb200_dbs0p50"] = ("*ZprimeTobb200_dbs0p50*",)
+    sig_map["ZprimeTobb200_dbs1p00"] = ("*ZprimeTobb200_dbs1p00*",)
+    #     sig_map["MonoJet"] = ("MonoJet*",)  ## signals
+    #     sig_map["MonoW"] = ("MonoW*",)    ## signals
+    #sig_map["MonoZ"] = ("MonoZ*",)    ## signals
+    data_map["data"] = ("BT*", )
+    #    data_map["SingleElectron"] = ("SingleElectron*", )
+    #    data_map["SinglePhoton"] = ("SinglePhoton*", )
+    #    data_map["SingleMuon"] = ("SingleMuon*", )
+    #    data_map["EGamma"] = ("EGamma*", )
+    #    data_map["Data"] = (["SingleElectron","SinglePhoton"], )
     print('Processes defined')
+    print('bkg_map: ', bkg_map)
     
     ###
     # Storing signal and background histograms
@@ -153,6 +123,7 @@ if __name__ == '__main__':
     parser.add_option('-f', '--file', help='file', dest='file')
     parser.add_option('-d', '--directory', help='directory', dest='directory')
     (options, args) = parser.parse_args()
+    print('file option', options.file)
 
     if options.directory: 
         bkg_hists, sig_hists, data_hists = scale_directory(options.directory)

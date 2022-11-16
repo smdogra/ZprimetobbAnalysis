@@ -1,0 +1,107 @@
+
+Couldn't find a valid proxy.
+
+Preprocessing:   0%|          | 0/10 [00:00<?, ?file/s]Preprocessing:  10%|#         | 1/10 [00:15<02:18, 15.44s/file]Preprocessing:  20%|##        | 2/10 [00:15<00:51,  6.43s/file]Preprocessing:  30%|###       | 3/10 [00:16<00:26,  3.75s/file]Preprocessing:  40%|####      | 4/10 [00:16<00:14,  2.41s/file]Preprocessing:  50%|#####     | 5/10 [00:20<00:14,  2.94s/file]Preprocessing:  60%|######    | 6/10 [00:21<00:08,  2.20s/file]Preprocessing:  70%|#######   | 7/10 [00:23<00:06,  2.22s/file]Preprocessing:  80%|########  | 8/10 [00:23<00:03,  1.63s/file]Preprocessing:  90%|######### | 9/10 [00:25<00:01,  1.66s/file]Preprocessing: 100%|##########| 10/10 [00:26<00:00,  1.58s/file]Preprocessing: 100%|##########| 10/10 [00:26<00:00,  2.69s/file]
+Processing:   0%|          | 0/130 [00:00<?, ?chunk/s]Processing:   0%|          | 0/130 [00:05<?, ?chunk/s]
+concurrent.futures.process._RemoteTraceback: 
+"""
+Traceback (most recent call last):
+  File "/cvmfs/sft.cern.ch/lcg/releases/Python/3.6.5-f74f0/x86_64-centos7-gcc8-opt/lib/python3.6/concurrent/futures/process.py", line 175, in _process_worker
+    r = call_item.fn(*call_item.args, **call_item.kwargs)
+  File "/var/lib/condor/execute/dir_34101/site-packages/coffea/processor/executor.py", line 197, in __call__
+    out = self.function(*args, **kwargs)
+  File "/var/lib/condor/execute/dir_34101/site-packages/coffea/processor/executor.py", line 990, in automatic_retries
+    raise e
+  File "/var/lib/condor/execute/dir_34101/site-packages/coffea/processor/executor.py", line 978, in automatic_retries
+    return func(*args, **kwargs)
+  File "/var/lib/condor/execute/dir_34101/site-packages/coffea/processor/executor.py", line 1167, in _work_function
+    else uproot.MultithreadedFileSource,
+  File "/var/lib/condor/execute/dir_34101/site-packages/uproot/reading.py", line 154, in open
+    **options  # NOTE: a comma after **options breaks Python 2
+  File "/var/lib/condor/execute/dir_34101/site-packages/uproot/reading.py", line 590, in __init__
+    file_path, **self._options  # NOTE: a comma after **options breaks Python 2
+  File "/var/lib/condor/execute/dir_34101/site-packages/uproot/source/xrootd.py", line 273, in __init__
+    self._open()
+  File "/var/lib/condor/execute/dir_34101/site-packages/uproot/source/xrootd.py", line 276, in _open
+    self._resource = XRootDResource(self._file_path, self._timeout)
+  File "/var/lib/condor/execute/dir_34101/site-packages/uproot/source/xrootd.py", line 84, in __init__
+    self._open()
+  File "/var/lib/condor/execute/dir_34101/site-packages/uproot/source/xrootd.py", line 93, in _open
+    self._xrd_error(status)
+  File "/var/lib/condor/execute/dir_34101/site-packages/uproot/source/xrootd.py", line 116, in _xrd_error
+    raise uproot._util._file_not_found(self._file_path, status.message)
+FileNotFoundError: file not found ([ERROR] Server responded with an error: [3022] invalid argument
+)
+
+    'root://xrootd-cms.infn.it//store/mc/RunIISummer20UL17NanoAODv9/TTJets_TuneCP5_13TeV-amcatnloFXFX-pythia8/NANOAODSIM/106X_mc2017_realistic_v9-v1/280000/B59AC8BC-064E-6B4D-888F-3386359A416C.root'
+
+Files may be specified as:
+   * str/bytes: relative or absolute filesystem path or URL, without any colons
+         other than Windows drive letter or URL schema.
+         Examples: "rel/file.root", "C:\abs\file.root", "http://where/what.root"
+   * str/bytes: same with an object-within-ROOT path, separated by a colon.
+         Example: "rel/file.root:tdirectory/ttree"
+   * pathlib.Path: always interpreted as a filesystem path or URL only (no
+         object-within-ROOT path), regardless of whether there are any colons.
+         Examples: Path("rel:/file.root"), Path("/abs/path:stuff.root")
+
+Functions that accept many files (uproot.iterate, etc.) also allow:
+   * glob syntax in str/bytes and pathlib.Path.
+         Examples: Path("rel/*.root"), "/abs/*.root:tdirectory/ttree"
+   * dict: keys are filesystem paths, values are objects-within-ROOT paths.
+         Example: {"/data_v1/*.root": "ttree_v1", "/data_v2/*.root": "ttree_v2"}
+   * already-open TTree objects.
+   * iterables of the above.
+
+"""
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "run.py", line 51, in <module>
+    executor_args={'schema': NanoAODSchema,'workers':  options.workers},
+  File "/var/lib/condor/execute/dir_34101/site-packages/coffea/processor/__init__.py", line 107, in _run_x_job
+    processor_instance=processor_instance,
+  File "/var/lib/condor/execute/dir_34101/site-packages/coffea/processor/executor.py", line 1366, in __call__
+    wrapped_out = executor(chunks, closure, None)
+  File "/var/lib/condor/execute/dir_34101/site-packages/coffea/processor/executor.py", line 579, in __call__
+    return processwith(pool=poolinstance)
+  File "/var/lib/condor/execute/dir_34101/site-packages/coffea/processor/executor.py", line 569, in processwith
+    accumulator,
+  File "/var/lib/condor/execute/dir_34101/site-packages/coffea/processor/accumulator.py", line 89, in accumulate
+    accum = next(gen)
+  File "/var/lib/condor/execute/dir_34101/site-packages/coffea/processor/accumulator.py", line 86, in <genexpr>
+    gen = (x for x in items if x is not None)
+  File "/var/lib/condor/execute/dir_34101/site-packages/tqdm/std.py", line 1167, in __iter__
+    for obj in iterable:
+  File "/var/lib/condor/execute/dir_34101/site-packages/coffea/processor/executor.py", line 240, in _futures_handler
+    yield done.pop().result()
+  File "/cvmfs/sft.cern.ch/lcg/releases/Python/3.6.5-f74f0/x86_64-centos7-gcc8-opt/lib/python3.6/concurrent/futures/_base.py", line 425, in result
+    return self.__get_result()
+  File "/cvmfs/sft.cern.ch/lcg/releases/Python/3.6.5-f74f0/x86_64-centos7-gcc8-opt/lib/python3.6/concurrent/futures/_base.py", line 384, in __get_result
+    raise self._exception
+FileNotFoundError: file not found ([ERROR] Server responded with an error: [3022] invalid argument
+)
+
+    'root://xrootd-cms.infn.it//store/mc/RunIISummer20UL17NanoAODv9/TTJets_TuneCP5_13TeV-amcatnloFXFX-pythia8/NANOAODSIM/106X_mc2017_realistic_v9-v1/280000/B59AC8BC-064E-6B4D-888F-3386359A416C.root'
+
+Files may be specified as:
+   * str/bytes: relative or absolute filesystem path or URL, without any colons
+         other than Windows drive letter or URL schema.
+         Examples: "rel/file.root", "C:\abs\file.root", "http://where/what.root"
+   * str/bytes: same with an object-within-ROOT path, separated by a colon.
+         Example: "rel/file.root:tdirectory/ttree"
+   * pathlib.Path: always interpreted as a filesystem path or URL only (no
+         object-within-ROOT path), regardless of whether there are any colons.
+         Examples: Path("rel:/file.root"), Path("/abs/path:stuff.root")
+
+Functions that accept many files (uproot.iterate, etc.) also allow:
+   * glob syntax in str/bytes and pathlib.Path.
+         Examples: Path("rel/*.root"), "/abs/*.root:tdirectory/ttree"
+   * dict: keys are filesystem paths, values are objects-within-ROOT paths.
+         Example: {"/data_v1/*.root": "ttree_v1", "/data_v2/*.root": "ttree_v2"}
+   * already-open TTree objects.
+   * iterables of the above.
+
+ls: cannot access hists/UL_BFF_v1_test_2017/TTJets_TuneCP5_13TeV-amcatnloFXFX-pythia8____20_.futures: No such file or directory
+cp: cannot stat 'hists/UL_BFF_v1_test_2017/TTJets_TuneCP5_13TeV-amcatnloFXFX-pythia8____20_.futures': No such file or directory
