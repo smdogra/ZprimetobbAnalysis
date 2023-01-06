@@ -1165,7 +1165,7 @@ if __name__ == '__main__':
     (options, args) = parser.parse_args()
 
     #with open('metadata/UL_'+options.year+'.json') as fin:
-    with open('metadata/BFF_T2_KISTI_2017_v1.json') as fin:
+    with open('metadata/BFF_2017_T2_KR_KISTI.json') as fin:
     #with open('metadata/Signal.json') as fin:
         samplefiles = json.load(fin)
         xsec = {k: v['xs'] for k, v in samplefiles.items()}
@@ -1180,5 +1180,10 @@ if __name__ == '__main__':
                                            ids=ids,
                                            common=common)
 
-    save(processor_instance, 'data/UL_BFF_Final_v1_'+options.year+'.processor')
-    print("processor name: UL_BFF_Final_v1_{}".format(options.year))
+    #save(processor_instance, 'data/UL_BFF_v1_test_v3_'+options.year+'.processor')
+    #save(processor_instance, 'data/UL_BFF_v1_test_v4_'+options.year+'.processor')
+    #save(processor_instance, 'data/UL_BFF_test_'+options.year+'.processor')
+    save(processor_instance, 'data/test_'+options.year+'.processor')
+    print("processor name: test_{}".format(options.year))
+    #print("processor name: UL_BFF_v1_test_v3_{}".format(options.year))
+    #print("processor name: UL_BFF_test_{}".format(options.year))

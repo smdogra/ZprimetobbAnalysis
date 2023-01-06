@@ -1,5 +1,0 @@
-
-Couldn't find a valid proxy.
-
-Preprocessing:   0%|          | 0/4 [00:00<?, ?file/s]Preprocessing:  25%|##5       | 1/4 [00:18<00:56, 18.77s/file]Preprocessing:  50%|#####     | 2/4 [00:19<00:15,  7.89s/file]Preprocessing: 100%|##########| 4/4 [00:24<00:00,  4.65s/file]Preprocessing: 100%|##########| 4/4 [00:24<00:00,  6.12s/file]
-Processing:   0%|          | 0/4 [00:00<?, ?chunk/s]Processing:  25%|##5       | 1/4 [00:23<01:09, 23.23s/chunk]Processing:  50%|#####     | 2/4 [00:39<00:38, 19.21s/chunk]Processing:  75%|#######5  | 3/4 [00:47<00:14, 14.19s/chunk]Processing: 100%|##########| 4/4 [05:53<00:00, 129.39s/chunk]Processing: 100%|##########| 4/4 [05:53<00:00, 88.46s/chunk] 

@@ -14,6 +14,3 @@ QCD_HT700to1000_TuneCP5_PSWeights_13TeV-madgraph-pythia8
 QCD_HT1000to1500_TuneCP5_PSWeights_13TeV-madgraph-pythia8
 QCD_HT1500to2000_TuneCP5_PSWeights_13TeV-madgraph-pythia8
 QCD_HT2000toInf_TuneCP5_PSWeights_13TeV-madgraph-pythia8
-ZprimeTobb200_dbs0p04 
-ZprimeTobb200_dbs0p50
-ZprimeTobb200_dbs1p00

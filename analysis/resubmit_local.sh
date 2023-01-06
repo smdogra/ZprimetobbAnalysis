@@ -1,0 +1,17 @@
+python  run.py -p UL_BFF_Final_v1_2017 -m BFF_T2_KISTI_2017_v1 -d QCD_HT1000to1500_TuneCP5_PSWeights_13TeV-madgraph-pythia8____14_
+python  run.py -p UL_BFF_Final_v1_2017 -m BFF_T2_KISTI_2017_v1 -d QCD_HT1000to1500_TuneCP5_PSWeights_13TeV-madgraph-pythia8____18_
+python  run.py -p UL_BFF_Final_v1_2017 -m BFF_T2_KISTI_2017_v1 -d QCD_HT1000to1500_TuneCP5_PSWeights_13TeV-madgraph-pythia8____2_
+python  run.py -p UL_BFF_Final_v1_2017 -m BFF_T2_KISTI_2017_v1 -d QCD_HT1500to2000_TuneCP5_PSWeights_13TeV-madgraph-pythia8____11_
+python  run.py -p UL_BFF_Final_v1_2017 -m BFF_T2_KISTI_2017_v1 -d QCD_HT1500to2000_TuneCP5_PSWeights_13TeV-madgraph-pythia8____1_
+python  run.py -p UL_BFF_Final_v1_2017 -m BFF_T2_KISTI_2017_v1 -d QCD_HT1500to2000_TuneCP5_PSWeights_13TeV-madgraph-pythia8____3_
+python  run.py -p UL_BFF_Final_v1_2017 -m BFF_T2_KISTI_2017_v1 -d QCD_HT1500to2000_TuneCP5_PSWeights_13TeV-madgraph-pythia8____4_
+python  run.py -p UL_BFF_Final_v1_2017 -m BFF_T2_KISTI_2017_v1 -d QCD_HT1500to2000_TuneCP5_PSWeights_13TeV-madgraph-pythia8____7_
+python  run.py -p UL_BFF_Final_v1_2017 -m BFF_T2_KISTI_2017_v1 -d QCD_HT2000toInf_TuneCP5_PSWeights_13TeV-madgraph-pythia8____13_
+python  run.py -p UL_BFF_Final_v1_2017 -m BFF_T2_KISTI_2017_v1 -d QCD_HT2000toInf_TuneCP5_PSWeights_13TeV-madgraph-pythia8____5_
+python  run.py -p UL_BFF_Final_v1_2017 -m BFF_T2_KISTI_2017_v1 -d QCD_HT2000toInf_TuneCP5_PSWeights_13TeV-madgraph-pythia8____9_
+python  run.py -p UL_BFF_Final_v1_2017 -m BFF_T2_KISTI_2017_v1 -d QCD_HT300to500_TuneCP5_PSWeights_13TeV-madgraph-pythia8____11_
+python  run.py -p UL_BFF_Final_v1_2017 -m BFF_T2_KISTI_2017_v1 -d QCD_HT300to500_TuneCP5_PSWeights_13TeV-madgraph-pythia8____12_
+python  run.py -p UL_BFF_Final_v1_2017 -m BFF_T2_KISTI_2017_v1 -d QCD_HT300to500_TuneCP5_PSWeights_13TeV-madgraph-pythia8____13_
+python  run.py -p UL_BFF_Final_v1_2017 -m BFF_T2_KISTI_2017_v1 -d QCD_HT300to500_TuneCP5_PSWeights_13TeV-madgraph-pythia8____14_
+python  run.py -p UL_BFF_Final_v1_2017 -m BFF_T2_KISTI_2017_v1 -d QCD_HT300to500_TuneCP5_PSWeights_13TeV-madgraph-pythia8____15_
+python  run.py -p UL_BFF_Final_v1_2017 -m BFF_T2_KISTI_2017_v1 -d QCD_HT300to500_TuneCP5_PSWeights_13TeV-madgraph-pythia8____16_

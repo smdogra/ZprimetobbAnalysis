@@ -12,7 +12,8 @@ def scale_file(file):
 
     print('Loading file:',file)    
     hists=load(file)
-    print('hists sumw', hists['sumw'].identifiers('dataset'))
+    #print('hists sumw', hists['sumw'].identifiers('dataset'))
+    print(hists.keys())
 
     pd = []
     for d in hists['sumw'].identifiers('dataset'):
@@ -52,6 +53,7 @@ def scale(hists):
     ###
     # Rescaling MC histograms using the xsec weight
     ###
+    print('print identifiers',hists['dibjetmass'].identifiers('dataset'))
 
     scale={}
     for d in hists['sumw'].identifiers('dataset'):
@@ -64,6 +66,7 @@ def scale(hists):
     for key in hists.keys():
         if key=='sumw': continue
         for d in hists[key].identifiers('dataset'):
+            print('dataset d', d)
             if 'BT' in d.name or 'MET' in d.name or 'SingleElectron' in d.name or 'SinglePhoton' in d.name or 'EGamma' in d.name or 'SingleMuon' in d.name: continue
             hists[key].scale({d:1/scale[d]},axis='dataset')
             print('scale[',d,']: ', scale[d])
@@ -88,13 +91,13 @@ def scale(hists):
     
     bkg_map["QCD"] = ("*QCD*",)
     bkg_map["TTJet"] = ("*TT*",)
-    sig_map["ZprimeTobb200_dbs0p04"] = ("*ZprimeTobb200_dbs0p04*",)  ## signals
-    sig_map["ZprimeTobb200_dbs0p50"] = ("*ZprimeTobb200_dbs0p50*",)
-    sig_map["ZprimeTobb200_dbs1p00"] = ("*ZprimeTobb200_dbs1p00*",)
+    sig_map["ZprimeTobb200_dbs0p04"] = ("*dbs0p04*") #("*ZprimeTobb200_dbs0p04*",)  ## signals
+    sig_map["ZprimeTobb200_dbs0p50"] = ("*dbs0p50*") #("*ZprimeTobb200_dbs0p50*",)
+    sig_map["ZprimeTobb200_dbs1p00"] = ("*dbs1p00*") #("*ZprimeTobb200_dbs1p00*",)
     #     sig_map["MonoJet"] = ("MonoJet*",)  ## signals
     #     sig_map["MonoW"] = ("MonoW*",)    ## signals
     #sig_map["MonoZ"] = ("MonoZ*",)    ## signals
-    data_map["data"] = ("BT*", )
+    data_map["data"] = ("*BT*", )
     #    data_map["SingleElectron"] = ("SingleElectron*", )
     #    data_map["SinglePhoton"] = ("SinglePhoton*", )
     #    data_map["SingleMuon"] = ("SingleMuon*", )

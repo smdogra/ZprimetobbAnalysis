@@ -1,107 +1,0 @@
-
-Couldn't find a valid proxy.
-
-Preprocessing:   0%|          | 0/8 [00:00<?, ?file/s]Preprocessing:  12%|#2        | 1/8 [00:12<01:25, 12.24s/file]Preprocessing:  25%|##5       | 2/8 [00:13<00:33,  5.61s/file]Preprocessing:  38%|###7      | 3/8 [00:13<00:15,  3.09s/file]Preprocessing:  50%|#####     | 4/8 [00:13<00:07,  1.96s/file]Preprocessing:  62%|######2   | 5/8 [00:14<00:04,  1.53s/file]Preprocessing:  75%|#######5  | 6/8 [00:15<00:02,  1.26s/file]Preprocessing:  88%|########7 | 7/8 [00:16<00:01,  1.31s/file]Preprocessing: 100%|##########| 8/8 [00:16<00:00,  2.07s/file]
-Processing:   0%|          | 0/52 [00:00<?, ?chunk/s]Processing:   2%|1         | 1/52 [00:12<10:29, 12.34s/chunk]Processing:   4%|3         | 2/52 [00:13<05:01,  6.04s/chunk]Processing:   6%|5         | 3/52 [00:16<03:39,  4.48s/chunk]Processing:   8%|7         | 4/52 [00:17<02:29,  3.12s/chunk]Processing:  10%|9         | 5/52 [00:26<04:07,  5.26s/chunk]Processing:  12%|#1        | 6/52 [00:26<02:43,  3.56s/chunk]Processing:  13%|#3        | 7/52 [00:29<02:27,  3.28s/chunk]Processing:  15%|#5        | 8/52 [00:30<01:54,  2.61s/chunk]Processing:  17%|#7        | 9/52 [00:36<02:32,  3.54s/chunk]Processing:  19%|#9        | 10/52 [00:36<01:47,  2.57s/chunk]Processing:  23%|##3       | 12/52 [00:37<01:00,  1.50s/chunk]Processing:  25%|##5       | 13/52 [00:39<01:04,  1.66s/chunk]Processing:  27%|##6       | 14/52 [00:40<01:00,  1.60s/chunk]Processing:  29%|##8       | 15/52 [00:42<00:58,  1.57s/chunk]Processing:  31%|###       | 16/52 [00:43<00:51,  1.43s/chunk]Processing:  33%|###2      | 17/52 [00:48<01:24,  2.42s/chunk]Processing:  35%|###4      | 18/52 [00:49<01:13,  2.15s/chunk]Processing:  37%|###6      | 19/52 [00:50<00:58,  1.77s/chunk]Processing:  38%|###8      | 20/52 [00:51<00:45,  1.42s/chunk]Processing:  40%|####      | 21/52 [00:53<00:55,  1.79s/chunk]Processing:  42%|####2     | 22/52 [00:54<00:38,  1.30s/chunk]Processing:  44%|####4     | 23/52 [00:55<00:37,  1.28s/chunk]Processing:  46%|####6     | 24/52 [00:58<00:50,  1.79s/chunk]Processing:  48%|####8     | 25/52 [00:59<00:44,  1.65s/chunk]Processing:  50%|#####     | 26/52 [00:59<00:32,  1.24s/chunk]Processing:  52%|#####1    | 27/52 [01:07<01:20,  3.21s/chunk]Processing:  54%|#####3    | 28/52 [01:08<00:56,  2.37s/chunk]Processing:  56%|#####5    | 29/52 [01:10<00:55,  2.42s/chunk]Processing:  58%|#####7    | 30/52 [01:12<00:47,  2.17s/chunk]Processing:  60%|#####9    | 31/52 [01:14<00:42,  2.05s/chunk]Processing:  62%|######1   | 32/52 [01:14<00:30,  1.52s/chunk]Processing:  63%|######3   | 33/52 [01:16<00:30,  1.58s/chunk]Processing:  65%|######5   | 34/52 [01:16<00:22,  1.24s/chunk]Processing:  67%|######7   | 35/52 [01:19<00:27,  1.64s/chunk]Processing:  69%|######9   | 36/52 [01:21<00:29,  1.86s/chunk]Processing:  71%|#######1  | 37/52 [01:25<00:38,  2.55s/chunk]Processing:  73%|#######3  | 38/52 [01:27<00:32,  2.30s/chunk]Processing:  75%|#######5  | 39/52 [01:29<00:29,  2.24s/chunk]Processing:  77%|#######6  | 40/52 [01:29<00:19,  1.67s/chunk]Processing:  81%|########  | 42/52 [01:31<00:12,  1.22s/chunk]Processing:  81%|########  | 42/52 [01:33<00:22,  2.22s/chunk]
-concurrent.futures.process._RemoteTraceback: 
-"""
-Traceback (most recent call last):
-  File "/cvmfs/sft.cern.ch/lcg/releases/Python/3.6.5-f74f0/x86_64-centos7-gcc8-opt/lib/python3.6/concurrent/futures/process.py", line 175, in _process_worker
-    r = call_item.fn(*call_item.args, **call_item.kwargs)
-  File "/var/lib/condor/execute/dir_47167/site-packages/coffea/processor/executor.py", line 197, in __call__
-    out = self.function(*args, **kwargs)
-  File "/var/lib/condor/execute/dir_47167/site-packages/coffea/processor/executor.py", line 990, in automatic_retries
-    raise e
-  File "/var/lib/condor/execute/dir_47167/site-packages/coffea/processor/executor.py", line 978, in automatic_retries
-    return func(*args, **kwargs)
-  File "/var/lib/condor/execute/dir_47167/site-packages/coffea/processor/executor.py", line 1167, in _work_function
-    else uproot.MultithreadedFileSource,
-  File "/var/lib/condor/execute/dir_47167/site-packages/uproot/reading.py", line 154, in open
-    **options  # NOTE: a comma after **options breaks Python 2
-  File "/var/lib/condor/execute/dir_47167/site-packages/uproot/reading.py", line 590, in __init__
-    file_path, **self._options  # NOTE: a comma after **options breaks Python 2
-  File "/var/lib/condor/execute/dir_47167/site-packages/uproot/source/xrootd.py", line 273, in __init__
-    self._open()
-  File "/var/lib/condor/execute/dir_47167/site-packages/uproot/source/xrootd.py", line 276, in _open
-    self._resource = XRootDResource(self._file_path, self._timeout)
-  File "/var/lib/condor/execute/dir_47167/site-packages/uproot/source/xrootd.py", line 84, in __init__
-    self._open()
-  File "/var/lib/condor/execute/dir_47167/site-packages/uproot/source/xrootd.py", line 93, in _open
-    self._xrd_error(status)
-  File "/var/lib/condor/execute/dir_47167/site-packages/uproot/source/xrootd.py", line 116, in _xrd_error
-    raise uproot._util._file_not_found(self._file_path, status.message)
-FileNotFoundError: file not found ([ERROR] Server responded with an error: [3022] invalid argument
-)
-
-    'root://xrootd-cms.infn.it//store/data/Run2017F/BTagCSV/NANOAOD/UL2017_MiniAODv2_NanoAODv9-v1/130000/0774A2DE-C7B0-3349-8755-669A9EA1FCD6.root'
-
-Files may be specified as:
-   * str/bytes: relative or absolute filesystem path or URL, without any colons
-         other than Windows drive letter or URL schema.
-         Examples: "rel/file.root", "C:\abs\file.root", "http://where/what.root"
-   * str/bytes: same with an object-within-ROOT path, separated by a colon.
-         Example: "rel/file.root:tdirectory/ttree"
-   * pathlib.Path: always interpreted as a filesystem path or URL only (no
-         object-within-ROOT path), regardless of whether there are any colons.
-         Examples: Path("rel:/file.root"), Path("/abs/path:stuff.root")
-
-Functions that accept many files (uproot.iterate, etc.) also allow:
-   * glob syntax in str/bytes and pathlib.Path.
-         Examples: Path("rel/*.root"), "/abs/*.root:tdirectory/ttree"
-   * dict: keys are filesystem paths, values are objects-within-ROOT paths.
-         Example: {"/data_v1/*.root": "ttree_v1", "/data_v2/*.root": "ttree_v2"}
-   * already-open TTree objects.
-   * iterables of the above.
-
-"""
-
-The above exception was the direct cause of the following exception:
-
-Traceback (most recent call last):
-  File "run.py", line 51, in <module>
-    executor_args={'schema': NanoAODSchema,'workers':  options.workers},
-  File "/var/lib/condor/execute/dir_47167/site-packages/coffea/processor/__init__.py", line 107, in _run_x_job
-    processor_instance=processor_instance,
-  File "/var/lib/condor/execute/dir_47167/site-packages/coffea/processor/executor.py", line 1366, in __call__
-    wrapped_out = executor(chunks, closure, None)
-  File "/var/lib/condor/execute/dir_47167/site-packages/coffea/processor/executor.py", line 579, in __call__
-    return processwith(pool=poolinstance)
-  File "/var/lib/condor/execute/dir_47167/site-packages/coffea/processor/executor.py", line 569, in processwith
-    accumulator,
-  File "/var/lib/condor/execute/dir_47167/site-packages/coffea/processor/accumulator.py", line 94, in accumulate
-    accum = iadd(accum, next(gen))
-  File "/var/lib/condor/execute/dir_47167/site-packages/coffea/processor/accumulator.py", line 86, in <genexpr>
-    gen = (x for x in items if x is not None)
-  File "/var/lib/condor/execute/dir_47167/site-packages/tqdm/std.py", line 1167, in __iter__
-    for obj in iterable:
-  File "/var/lib/condor/execute/dir_47167/site-packages/coffea/processor/executor.py", line 240, in _futures_handler
-    yield done.pop().result()
-  File "/cvmfs/sft.cern.ch/lcg/releases/Python/3.6.5-f74f0/x86_64-centos7-gcc8-opt/lib/python3.6/concurrent/futures/_base.py", line 425, in result
-    return self.__get_result()
-  File "/cvmfs/sft.cern.ch/lcg/releases/Python/3.6.5-f74f0/x86_64-centos7-gcc8-opt/lib/python3.6/concurrent/futures/_base.py", line 384, in __get_result
-    raise self._exception
-FileNotFoundError: file not found ([ERROR] Server responded with an error: [3022] invalid argument
-)
-
-    'root://xrootd-cms.infn.it//store/data/Run2017F/BTagCSV/NANOAOD/UL2017_MiniAODv2_NanoAODv9-v1/130000/0774A2DE-C7B0-3349-8755-669A9EA1FCD6.root'
-
-Files may be specified as:
-   * str/bytes: relative or absolute filesystem path or URL, without any colons
-         other than Windows drive letter or URL schema.
-         Examples: "rel/file.root", "C:\abs\file.root", "http://where/what.root"
-   * str/bytes: same with an object-within-ROOT path, separated by a colon.
-         Example: "rel/file.root:tdirectory/ttree"
-   * pathlib.Path: always interpreted as a filesystem path or URL only (no
-         object-within-ROOT path), regardless of whether there are any colons.
-         Examples: Path("rel:/file.root"), Path("/abs/path:stuff.root")
-
-Functions that accept many files (uproot.iterate, etc.) also allow:
-   * glob syntax in str/bytes and pathlib.Path.
-         Examples: Path("rel/*.root"), "/abs/*.root:tdirectory/ttree"
-   * dict: keys are filesystem paths, values are objects-within-ROOT paths.
-         Example: {"/data_v1/*.root": "ttree_v1", "/data_v2/*.root": "ttree_v2"}
-   * already-open TTree objects.
-   * iterables of the above.
-
-ls: cannot access hists/UL_BFF_v1_test_2017/BTagCSVF____8_.futures: No such file or directory
-cp: cannot stat 'hists/UL_BFF_v1_test_2017/BTagCSVF____8_.futures': No such file or directory

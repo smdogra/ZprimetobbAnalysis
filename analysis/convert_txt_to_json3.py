@@ -102,7 +102,7 @@ for txt_file in flist:
        
 import json
 #folder = "metadata/UL_"+options.year+'.json'
-folder = "metadata/BFF_"+options.year+'_v1.json'
+folder = "metadata/BFF_T2_KISTI_"+options.year+'_v1.json'
 with open(folder, "w") as fout:
     json.dump(datadict_obj, fout, indent=4)
     
