@@ -571,60 +571,32 @@ class AnalysisProcessor(processor.ProcessorABC):
 
 
         # Initialize physics objects ###
-
-        
         mu = events.Muon
-        
-        mu['isloose'] = isLooseMuon(mu.pt, mu.eta, mu.pfRelIso04_all, mu.looseId, self._year)
-        mu['istight'] = isTightMuon(mu.pt, mu.eta, mu.pfRelIso04_all, mu.tightId, self._year)
-        mu["T"] = ak.zip({"pt": mu.pt, "phi": mu.phi}, 
-                  with_name="PolarTwoVector", 
-                  behavior=vector.behavior)
-        mu['p4'] = ak.zip({
-                            "pt": mu.pt,
-                            "eta": mu.eta,
-                            "phi": mu.phi,
-                            "mass": mu.mass},
-                            with_name="PtEtaPhiMLorentzVector",
-        )
-    
-
+        n_mu = ak.num(mu)
+        mu['isloose'] = isLooseMuon(mu.pt, mu.eta, mu.pfIsoId, mu.looseId, self._year, mu.isPFcand, mu.isGlobal, mu.isTracker)
+        mu['istight'] = isTightMuon(mu.pt, mu.eta, mu.pfIsoId, mu.tightId, self._year, mu.isPFcand, mu.isGlobal, mu.isTracker)
         mu_loose = mu[ak.values_astype(mu.isloose, np.bool)]
         mu_tight = mu[ak.values_astype(mu.istight, np.bool)]
-        ak.num(mu, axis=1)
-        mu_ntot = ak.num(mu, axis=1)
-        mu_nloose = ak.num(mu_loose, axis=1)
-        mu_ntight = ak.num(mu_tight, axis=1)
+        mu_nloose = ak.num(mu_loose)
+        mu_ntight = ak.num(mu_tight)
         leading_mu = mu_tight[:,:1]
         
         e = events.Electron
-        event_size = len(events)
-        
-        e['isclean'] = ak.all(e.metric_table(mu_loose) > 0.3, axis=-1)
+        n_e = ak.num(e)
+        #e['isclean'] = ak.all(e.metric_table(mu_loose) >= 0.3, axis=-1)
+        e['isclean'] = ~(ak.any(e.metric_table(mu_loose) < 0.3, axis=2))
         e['isloose'] = isLooseElectron(e.pt, e.eta+e.deltaEtaSC, e.dxy, e.dz, e.cutBased, self._year)
         e['istight'] = isTightElectron(e.pt, e.eta+e.deltaEtaSC, e.dxy, e.dz, e.cutBased, self._year)
-        e["T"] = ak.zip({"pt": e.pt, "phi": e.phi}, 
-                        with_name="PolarTwoVector", 
-                        behavior=vector.behavior)
-        e['p4'] = ak.zip({
-                            "pt": e.pt,
-                            "eta": e.eta,
-                            "phi": e.phi,
-                            "mass": e.mass},
-                            with_name="PtEtaPhiMLorentzVector",
-        )
         e_clean = e[ak.values_astype(e.isclean, np.bool)]
-        e_loose = e_clean[ak.values_astype(e_clean.isloose, np.bool)]
+        e_loose = e[ak.values_astype(e.isloose, np.bool)]
         e_tight = e_clean[ak.values_astype(e_clean.istight, np.bool)]
-        e_ntot = ak.num(e, axis=1)
-        e_nloose = ak.num(e_loose, axis=1)
-
-        #         e_nloose = e_loose.counts
-        e_ntight = ak.num(e_tight, axis=1)
+        e_nloose = ak.num(e_loose)
+        e_ntight = ak.num(e_tight)
         leading_e = e_tight[:,:1]
 
+
         tau = events.Tau
-        tau['isclean'] = ak.all(tau.metric_table(mu_loose) > 0.4, axis=-1) & ak.all(tau.metric_table(e_loose) > 0.4, axis=-1)
+        tau['isclean'] = ~(ak.any(tau.metric_table(mu_loose) < 0.4, axis=2)) & ~(ak.any(tau.metric_table(e_loose) < 0.4, axis=2))
         try:
             tau['isloose']=isLooseTau(tau.pt,tau.eta,tau.idDecayMode,tau.idDeepTau2017v2p1VSjet,self._year)
         except:
@@ -633,33 +605,22 @@ class AnalysisProcessor(processor.ProcessorABC):
             tau['isloose']=isLooseTau(tau.pt,tau.eta,tau.idDecayModeNewDMs,tau.idDeepTau2017v2p1VSjet,self._year)
 
         tau_clean = tau[ak.values_astype(tau.isclean, np.bool)]
-
         tau_loose = tau_clean[ak.values_astype(tau_clean.isloose, np.bool)]
         tau_ntot = ak.num(tau, axis=1)
         tau_nloose = ak.num(tau_loose, axis=1)
 
         pho = events.Photon
-        pho['isclean'] = ak.all(pho.metric_table(mu_loose) > 0.4, axis=-1) & ak.all(pho.metric_table(e_loose) > 0.4, axis=-1)
-        _id = 'cutBased'
-        if self._year == '2016':
-            _id = 'cutBased'
-        pho['isloose'] = isLoosePhoton(pho.pt, pho.eta, pho[_id], self._year) & (pho.electronVeto)  # added electron veto flag
-        pho['istight'] = isTightPhoton(pho.pt, pho[_id], self._year) & (pho.isScEtaEB) & (pho.electronVeto)  # tight photons are barrel only
-
-        pho["T"] = ak.zip({"pt": pho.pt, "phi": pho.phi}, 
-                  with_name="PolarTwoVector", 
-                  behavior=vector.behavior)
-    
+        pho_n = ak.num(pho,axis=1)
+        pho['isclean'] = ~(ak.any(pho.metric_table(mu_loose) < 0.4, axis=2)) & ~(ak.any(pho.metric_table(e_loose) < 0.4, axis=2))
+        pho['isloose'] = isLoosePhoton(pho.pt, pho.eta, pho['cutBased'], self._year)  ## no electronveto version
+        pho['istight'] = isTightPhoton(pho.pt, pho['cutBased'], self._year) & (pho.isScEtaEB) & (pho.electronVeto)  # tight photons are barrel only
         pho_clean = pho[ak.values_astype(pho.isclean, np.bool)]
         pho_loose = pho_clean[ak.values_astype(pho_clean.isloose, np.bool)]
         pho_tight = pho_clean[ak.values_astype(pho_clean.istight, np.bool)]
-        pho_ntot = ak.num(pho,axis=1)
         pho_nloose = ak.num(pho_loose, axis=1)
         pho_ntight = ak.num(pho_tight, axis=1)
-        leading_pho = pho[:,:1] #new way to define leading photon
-        leading_pho = leading_pho[ak.values_astype(leading_pho.isclean, np.bool)]
+        leading_pho = pho_tight[:,:1]
         
-        leading_pho = leading_pho[ak.values_astype(leading_pho.istight, np.bool)]
         
 
         j = events.Jet
@@ -701,39 +662,17 @@ class AnalysisProcessor(processor.ProcessorABC):
         j_nHEM = ak.num(j_HEM, axis=1)
         atleast_one_jet_with_pt_grt_50 = ((ak.num(j_good_clean)>=1) & ak.any(j_good_clean.pt>=50, axis=-1))
         print('good clean B jet', j_good_clean_dflvB.pt, len(j_good_clean_dflvB.pt))
-
-        #print('number of dflvB ', ak.num(j_good_clean_dflvB), len(ak.num(j_good_clean_dflvB)), (ak.num(j_good_clean_dflvB) == 4))
-        #select_4bjets = j_good_clean_dflvB[(ak.num(j_good_clean_dflvB) == 4)]
-        #select_4bjets = j_good_clean_dflvB[ak.num(j_good_clean_dflvB) >= 4]
-        #print('good clean B 4 jet: ', select_4bjets, len(select_4bjets))
-        #print('1st good clean B pt: ', select_4bjets[:,:1], len(select_4bjets[:,:1]))
-        #print('2nd good clean B pt: ', select_4bjets[:,1:2], len(select_4bjets[:,1:2]))
-        #onebjets = ak.firsts(select_4bjets[ak.num(j_good_clean_dflvB) >= 4][:,:1])
-
-        #onebjets = j_good_clean_dflvB[(ak.num(j_good_clean_dflvB) == 4)][:,:1]
         onebjets = j_good_clean_dflvB[:,:1]
 
         print('first b jet ', onebjets.pt, len(onebjets.pt))
-        #twobjets = j_good_clean_dflvB[(ak.num(j_good_clean_dflvB) >= 4)][:,1:2]
         twobjets = j_good_clean_dflvB[:,1:2]
         print('second b jet', twobjets.pt, len(twobjets.pt))
         threebjets = j_good_clean_dflvB[:,2:3]
         fourbjets = j_good_clean_dflvB[:,3:4]
-
-        #dibjet = j_good_clean_dflvB[:,:1]
         dibj = ak.cartesian({"onebj":onebjets,"twobj":twobjets})
         print('dibj', dibj.fields)
         dibjet = dibj.onebj + dibj.twobj
         print('dibjet', dibjet, dibjet.pt)
-        #threebjets = select_4bjets[:,2]
-        #fourbjets = select_4bjets[:,3]
-        #twojets = j_good_clean_dflvB[ak.num(j_good_clean_dflvB) >= 2]
-        #print('twojets: ', twojets.pt)
-        #dibjet = twojets[:,0] + twojets[:,1]
-        #print('twobjets: ', twobjets.pt)
-        
-        #twojets = j_good_clean_dflvB
-        #dibjet = ak.firsts(j_good_clean_dflvB[:, :1]) + ak.firsts(j_good_clean_dflvB[:, 1:2])
         
         # *****btag
         # https://twiki.cern.ch/twiki/bin/viewauth/CMS/BtagRecommendation102X#Supported_Algorithms_and_Operati
