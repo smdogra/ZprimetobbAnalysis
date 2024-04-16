@@ -10,9 +10,6 @@ import time
 import numexpr
 import os
 from optparse import OptionParser
-import uproot
-import numpy as np
-from coffea import hist
 
 parser = OptionParser()
 parser.add_option('-d', '--dataset', help='dataset', dest='dataset', default='')
@@ -24,70 +21,82 @@ parser.add_option('-t', '--tar', action='store_true', dest='tar')
 parser.add_option('-x', '--copy', action='store_true', dest='copy')
 (options, args) = parser.parse_args()
 
-os.system('mkdir -p hists/'+options.processor+'/run_condor/out hists/'+options.processor+'/run_condor/err hists/'+options.processor+'/run_condor/log')
+os.system("mkdir -p hists/"+options.processor)
 
 if options.tar:
-    os.system('tar --exclude-caches-all --exclude-vcs -czvf ../../decaf.tgz --exclude=\'analysis/hists/*/*reduced*\' --exclude=\'analysis/hists/*/*merged*\' --exclude=\'analysis/hists/*/*____*\' --exclude=\'analysis/hists/*/*condor/*/*\' ../../decaf')
-    os.system('tar --exclude-caches-all --exclude-vcs -czvf ../../pylocal.tgz -C ~/.local/lib/python3.6/ site-packages')
+    os.system('tar --exclude-caches-all --exclude-vcs -czvf ../../../../cmssw_11_3_4.tgz '
+              '--exclude=\'src/decaf/analysis/logs\' '
+              '--exclude=\'src/decaf/analysis/plots\' '
+              '--exclude=\'src/decaf/analysis/datacards\' '
+              '--exclude=\'src/decaf/analysis/results\' '
+              '--exclude=\'src/decaf/analysis/data/models\' '
+              '--exclude=\'src/decaf/analysis/hists/*/*.futures\' '
+              '--exclude=\'src/decaf/analysis/hists/*/*.merged\' '
+              '--exclude=\'src/decaf/analysis/hists/*/*.reduced\' '
+              '../../../../CMSSW_11_3_4')
+    os.system('tar --exclude-caches-all --exclude-vcs -czvf ../../../../pylocal_3_8.tgz -C ~/.local/lib/python3.8/ site-packages')
 
 if options.cluster == 'kisti':
     if options.copy:
-        os.system('xrdfs root://cms-xrdr.private.lo:2094/ locate -r /xrd/store/user/'+os.environ['USER']+'/decaf.tgz')
-        print("locate command execute")
-        os.system('xrdfs root://cms-xrdr.private.lo:2094/ rm /xrd/store/user/'+os.environ['USER']+'/decaf.tgz')
-        print('decaf removed')
-        os.system('xrdcp -f ../../decaf.tgz root://cms-xrdr.private.lo:2094//xrd/store/user/'+os.environ['USER']+'/decaf.tgz')
-        os.system('xrdfs root://cms-xrdr.private.lo:2094/ rm /xrd/store/user/'+os.environ['USER']+'/pylocal.tgz') 
+        os.system('xrdfs root://cms-xrdr.private.lo:2094/ rm /xrd/store/user/'+os.environ['USER']+'/cmssw_11_3_4.tgz')
+        print('cmssw removed')
+        os.system('xrdcp -f ../../../../cmssw_11_3_4.tgz root://cms-xrdr.private.lo:2094//xrd/store/user/'+os.environ['USER']+'/cmssw_11_3_4.tgz')
+        os.system('xrdfs root://cms-xrdr.private.lo:2094/ rm /xrd/store/user/'+os.environ['USER']+'/pylocal_3_8.tgz') 
         print('pylocal removed')
-        os.system('xrdcp -f ../../pylocal.tgz root://cms-xrdr.private.lo:2094//xrd/store/user/'+os.environ['USER']+'/pylocal.tgz')
+        os.system('xrdcp -f ../../../../pylocal_3_8.tgz root://cms-xrdr.private.lo:2094//xrd/store/user/'+os.environ['USER']+'/pylocal_3_8.tgz')
     jdl = """universe = vanilla
 Executable = run.sh
 Should_Transfer_Files = YES
 WhenToTransferOutput = ON_EXIT
-Transfer_Input_Files = run.sh, /tmp/x509up_u556950852
-Output = hists/$ENV(PROCESSOR)/run_condor/out/$ENV(SAMPLE)_$(Cluster)_$(Process).stdout
-Error = hists/$ENV(PROCESSOR)/run_condor/err/$ENV(SAMPLE)_$(Cluster)_$(Process).stderr
-Log = hists/$ENV(PROCESSOR)/run_condor/log/$ENV(SAMPLE)_$(Cluster)_$(Process).log
+Transfer_Input_Files = run.sh, /cms/ldap_home/sdogra/x509up
+Output = logs/condor/run/out/$ENV(PROCESSOR)_$ENV(SAMPLE)_$(Cluster)_$(Process).stdout
+Error = logs/condor/run/err/$ENV(PROCESSOR)_$ENV(SAMPLE)_$(Cluster)_$(Process).stderr
+Log = logs/condor/run/log/$ENV(PROCESSOR)_$ENV(SAMPLE)_$(Cluster)_$(Process).log
 TransferOutputRemaps = "$ENV(PROCESSOR)_$ENV(SAMPLE).futures=$ENV(PWD)/hists/$ENV(PROCESSOR)/$ENV(SAMPLE).futures"
 Arguments = $ENV(METADATA) $ENV(SAMPLE) $ENV(PROCESSOR) $ENV(CLUSTER) $ENV(USER)
 accounting_group=group_cms
 JobBatchName = $ENV(BTCN)
-request_cpus = 7
-request_memory = 21G
-request_disk = 50G
+request_cpus = 8
+request_memory = 7000
 Queue 1"""
 
 if options.cluster == 'lpc':
     if options.copy:
-        os.system('xrdcp -f ../../decaf.tgz root://cmseos.fnal.gov//store/user/'+os.environ['USER']+'/decaf.tgz')
-        os.system('xrdcp -f ../../pylocal.tgz root://cmseos.fnal.gov//store/user/'+os.environ['USER']+'/pylocal.tgz')
+        os.system('xrdcp -f ../../../../cmssw_11_3_4.tgz root://cmseos.fnal.gov//store/user/'+os.environ['USER']+'/cmssw_11_3_4.tgz')
+        os.system('xrdcp -f ../../../../pylocal_3_8.tgz root://cmseos.fnal.gov//store/user/'+os.environ['USER']+'/pylocal_3_8.tgz')
     jdl = """universe = vanilla
 Executable = run.sh
 Should_Transfer_Files = YES
 WhenToTransferOutput = ON_EXIT
 Transfer_Input_Files = run.sh
-Output = hists/$ENV(PROCESSOR)/run_condor/out/$ENV(SAMPLE)_$(Cluster)_$(Process).stdout
-Error = hists/$ENV(PROCESSOR)/run_condor/err/$ENV(SAMPLE)_$(Cluster)_$(Process).stderr
-Log = hists/$ENV(PROCESSOR)/run_condor/log/$ENV(SAMPLE)_$(Cluster)_$(Process).log
+Output = logs/condor/run/out/$ENV(PROCESSOR)_$ENV(SAMPLE)_$(Cluster)_$(Process).stdout
+Error = logs/condor/run/err/$ENV(PROCESSOR)_$ENV(SAMPLE)_$(Cluster)_$(Process).stderr
+Log = logs/condor/run/log/$ENV(PROCESSOR)_$ENV(SAMPLE)_$(Cluster)_$(Process).log
 TransferOutputRemaps = "$ENV(PROCESSOR)_$ENV(SAMPLE).futures=$ENV(PWD)/hists/$ENV(PROCESSOR)/$ENV(SAMPLE).futures"
 Arguments = $ENV(METADATA) $ENV(SAMPLE) $ENV(PROCESSOR) $ENV(CLUSTER) $ENV(USER) 
+JobBatchName = $ENV(BTCN)
 request_cpus = 8
-request_memory = 5700
+request_memory = 16000
 Queue 1"""
 
 jdl_file = open("run.submit", "w") 
 jdl_file.write(jdl) 
 jdl_file.close() 
 
-with open('metadata/'+options.metadata+'.json') as fin:
+with gzip.open('metadata/'+options.metadata+'.json.gz') as fin:
     datadef = json.load(fin)
 
 for dataset, info in datadef.items():
-    if options.dataset and options.dataset not in dataset: continue
-    if options.exclude and options.exclude in dataset: continue
-    os.system('rm -rf hists/'+options.processor+'/run_condor/err/'+dataset+'*')
-    os.system('rm -rf hists/'+options.processor+'/run_condor/log/'+dataset+'*')
-    os.system('rm -rf hists/'+options.processor+'/run_condor/out/'+dataset+'*')
+    if options.dataset:
+        if not any(_dataset in dataset for _dataset in options.dataset.split(',')): continue
+    if options.exclude:
+        if any(_dataset in dataset for _dataset in options.exclude.split(',')): continue
+    os.system('mkdir -p logs/condor/run/err/')
+    os.system('rm -rf logs/condor/run/err/*'+options.processor+'*'+dataset+'*')
+    os.system('mkdir -p logs/condor/run/log/')
+    os.system('rm -rf logs/condor/run/log/*'+options.processor+'*'+dataset+'*')
+    os.system('mkdir -p logs/condor/run/out/')
+    os.system('rm -rf logs/condor/run/out/*'+options.processor+'*'+dataset+'*')
     os.environ['SAMPLE'] = dataset
     os.environ['BTCN'] = dataset.split('____')[0]
     os.environ['PROCESSOR']   = options.processor
