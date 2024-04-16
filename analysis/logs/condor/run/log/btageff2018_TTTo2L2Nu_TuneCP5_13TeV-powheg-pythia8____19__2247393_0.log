@@ -1,0 +1,15 @@
+040 (2247393.000.000) 2024-03-19 11:17:52 Started transferring input files
+	Transferring to host: <134.75.127.191:9618?addrs=134.75.127.191-9618&alias=cms-t3-wn3002.sdfarm.kr&noUDP&sock=slot1_25_5739_6502_87576>
+...
+007 (2247393.000.000) 2024-03-19 11:17:52 Shadow exception!
+	Error from slot1@cms-t3-wn3002.sdfarm.kr: SHADOW at 134.75.124.127 failed to send file(s) to <134.75.127.191:36162>: |Error: reading from file /tmp/x509up_u556950957: (errno 13) Permission denied; STARTER failed to receive file(s) from <134.75.124.127:9618>
+	0  -  Run Bytes Sent By Job
+	1837  -  Run Bytes Received By Job
+...
+012 (2247393.000.000) 2024-03-19 11:17:52 Job was held.
+	Transfer input files failure at access point ui20 while sending files to execution point slot1@cms-t3-wn3002.sdfarm.kr. Details: reading from file /tmp/x509up_u556950957: (errno 13) Permission denied
+	Code 13 Subcode 13
+...
+009 (2247393.000.000) 2024-03-19 11:19:20 Job was aborted.
+	via condor_rm (by user sdogra)
+...

@@ -1,0 +1,38 @@
+000 (2273374.000.000) 2024-03-19 11:34:41 Job submitted from host: <134.75.124.127:9618?addrs=134.75.124.127-9618&alias=ui20.sdfarm.kr&noUDP&sock=schedd_5058_f21d>
+...
+040 (2273374.000.000) 2024-03-19 12:05:27 Started transferring input files
+	Transferring to host: <134.75.127.192:9618?addrs=134.75.127.192-9618&alias=cms-t3-wn3003.sdfarm.kr&noUDP&sock=slot1_51_10182_e3d7_192419>
+...
+040 (2273374.000.000) 2024-03-19 12:05:27 Finished transferring input files
+...
+001 (2273374.000.000) 2024-03-19 12:05:28 Job executing on host: <134.75.127.192:9618?addrs=134.75.127.192-9618&alias=cms-t3-wn3003.sdfarm.kr&noUDP&sock=startd_3626_b67f>
+...
+006 (2273374.000.000) 2024-03-19 12:05:37 Image size of job updated: 812
+	1  -  MemoryUsage of job (MB)
+	808  -  ResidentSetSize of job (KB)
+...
+006 (2273374.000.000) 2024-03-19 12:07:16 Image size of job updated: 9403464
+	1  -  MemoryUsage of job (MB)
+	808  -  ResidentSetSize of job (KB)
+...
+040 (2273374.000.000) 2024-03-19 12:07:17 Started transferring output files
+...
+040 (2273374.000.000) 2024-03-19 12:07:17 Finished transferring output files
+...
+005 (2273374.000.000) 2024-03-19 12:07:17 Job terminated.
+	(1) Normal termination (return value 0)
+		Usr 0 00:02:25, Sys 0 00:00:11  -  Run Remote Usage
+		Usr 0 00:00:00, Sys 0 00:00:00  -  Run Local Usage
+		Usr 0 00:02:25, Sys 0 00:00:11  -  Total Remote Usage
+		Usr 0 00:00:00, Sys 0 00:00:00  -  Total Local Usage
+	509644  -  Run Bytes Sent By Job
+	12213  -  Run Bytes Received By Job
+	509644  -  Total Bytes Sent By Job
+	12213  -  Total Bytes Received By Job
+	Partitionable Resources :     Usage  Request Allocated 
+	   Cpus                 :      0.13        8         8 
+	   Disk (KB)            : 797837          15    156468 
+	   Memory (MB)          :      1        7000      7040 
+
+	Job terminated of its own accord at 2024-03-19T03:07:16Z with exit-code 0.
+...
